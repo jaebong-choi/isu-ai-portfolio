@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롬프트 코칭 가이드 — 최재봉</title>
+<meta name="description" content="비개발 직원용 AI 활용 가이드 예시. 직군별 프롬프트 카드와 보안 수칙.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script>try{if(localStorage.getItem('pf-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+:root {
+  --ink: #1d1d29;
+  --ink-soft: #5a5a72;
+  --line: #e7e7f0;
+  --bg: #ffffff;
+  --bg-soft: #f7f7fc;
+  --point: #6d5ae6;
+  --point-deep: #5747c9;
+  --point-soft: #efedfc;
+  --warn: #9a6b00;
+  --warn-soft: #fdf3d8;
+  --glass: rgba(255, 255, 255, 0.65);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-sm: 0 1px 2px rgba(29, 29, 60, 0.05), 0 4px 14px rgba(29, 29, 60, 0.05);
+}
+:root[data-theme="dark"] {
+  --ink: #e9e9f4;
+  --ink-soft: #a4a4c0;
+  --line: #2b2b3e;
+  --bg: #131320;
+  --bg-soft: #1a1a2a;
+  --point: #8b7cf0;
+  --point-deep: #a89bf5;
+  --point-soft: rgba(139, 124, 240, 0.16);
+  --warn: #ecc25c;
+  --warn-soft: rgba(236, 194, 92, 0.14);
+  --glass: rgba(19, 19, 32, 0.65);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  word-break: keep-all;
+  font-size: 16px;
+}
+.wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+section { padding: 44px 0; }
+h2 { font-size: 1.35rem; letter-spacing: -0.015em; margin-bottom: 4px; }
+.sec-cap { color: var(--ink-soft); font-size: 0.93rem; margin-bottom: 22px; }
+a { color: var(--point); }
+
+header.top {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(29, 29, 60, 0.06);
+  padding: 10px 0; font-size: 0.9rem;
+}
+header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.ident small { display: block; font-size: 0.72rem; font-weight: 600; color: var(--ink-soft); line-height: 1.4; }
+.ident .name { font-weight: 800; font-size: 0.98rem; letter-spacing: -0.01em; }
+.top-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.top-right a.back { text-decoration: none; color: var(--ink-soft); font-size: 0.85rem; font-weight: 600; }
+.top-right a.back:hover { color: var(--point); }
+.ctrl button {
+  font: inherit; font-size: 0.78rem; font-weight: 700;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink-soft);
+  border-radius: 999px; padding: 4px 11px; cursor: pointer;
+}
+.ctrl button:hover { border-color: var(--point); color: var(--point); }
+
+.hero { padding: 56px 0 30px; }
+.hero h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 10px; }
+.hero .thesis { color: var(--ink-soft); max-width: 640px; margin-bottom: 18px; }
+.notice {
+  border-left: 3px solid var(--warn);
+  background: var(--warn-soft); color: var(--ink);
+  padding: 10px 16px; border-radius: 0 10px 10px 0;
+  font-size: 0.9rem; max-width: 640px;
+}
+.basics {
+  margin-top: 22px; padding: 14px 18px;
+  border: 1px solid var(--line); border-radius: 12px; background: var(--bg-soft);
+  font-size: 0.93rem; max-width: 640px;
+}
+.basics b { color: var(--point-deep); }
+
+h3.role { font-size: 1.05rem; letter-spacing: -0.01em; margin: 30px 0 12px; }
+h3.role small { font-weight: 600; color: var(--ink-soft); font-size: 0.83rem; margin-left: 8px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.card {
+  border: 1px solid var(--line); border-radius: 12px; background: var(--bg);
+  box-shadow: var(--shadow-sm); padding: 16px 18px;
+}
+.card .sit { font-weight: 700; font-size: 0.95rem; letter-spacing: -0.01em; margin-bottom: 10px; }
+.ex { font-size: 0.88rem; border-radius: 8px; padding: 9px 12px; margin-bottom: 8px; }
+.ex.bad { background: var(--bg-soft); color: var(--ink-soft); }
+.ex.good { background: var(--point-soft); color: var(--ink); }
+.ex .tag { font-weight: 800; font-size: 0.75rem; display: block; margin-bottom: 2px; }
+.ex.bad .tag { color: var(--warn); }
+.ex.good .tag { color: var(--point-deep); }
+.card .why { font-size: 0.83rem; color: var(--ink-soft); margin-top: 4px; }
+
+.sec { background: var(--bg-soft); }
+.sec .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 8px; }
+.sec ul { list-style: none; }
+.sec li { padding: 8px 0 8px 24px; position: relative; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
+.sec li:last-child { border-bottom: none; }
+.sec li::before { content: "✕"; position: absolute; left: 2px; color: var(--warn); font-weight: 800; font-size: 0.8rem; top: 10px; }
+.sec .ok li::before { content: "○"; color: var(--point-deep); }
+.sec h4 { font-size: 0.95rem; margin-bottom: 6px; }
+.sec table { border-collapse: collapse; width: 100%; font-size: 0.9rem; margin-top: 10px; background: var(--bg); border-radius: 12px; overflow: hidden; }
+.sec th, .sec td { border-bottom: 1px solid var(--line); padding: 9px 12px; text-align: left; }
+.sec thead th { font-size: 0.76rem; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+.sec .tbl-wrap { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 12px; }
+.sec .foot-note { font-size: 0.83rem; color: var(--ink-soft); margin-top: 14px; }
+
+footer { border-top: 1px solid var(--line); padding: 24px 0 46px; font-size: 0.85rem; color: var(--ink-soft); }
+
+@media (max-width: 720px) {
+  .hero { padding: 40px 0 24px; }
+  .cards { grid-template-columns: 1fr; }
+  .sec .cols { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="ident">
+      <small>사내 AI 활용 가이드 · 예시 문서</small>
+      <span class="name">프롬프트 코칭 가이드</span>
+    </div>
+    <div class="top-right">
+      <a class="back" href="../">← 포트폴리오</a>
+      <span class="ctrl"><button id="btn-theme" type="button">다크</button></span>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>같은 AI인데 왜<br>답이 다르게 나올까요</h1>
+    <p class="thesis">차이는 대부분 질문에 있습니다. 배경을 주고, 원하는 결과와 형식을 말하면 답의 품질이 달라집니다. 직군별로 자주 나오는 업무를 골라, 그대로 따라 쓸 수 있는 예시를 정리했습니다.</p>
+    <p class="notice"><b>이 문서는 채용 포트폴리오용 예시입니다.</b> 사내 배포를 가정하고 만든 샘플이며, 프롬프트 속 상황과 수치는 전부 가상입니다.</p>
+    <p class="basics">좋은 프롬프트에는 세 가지가 들어갑니다. <b>배경</b>(누가, 어떤 상황에서), <b>원하는 결과</b>(무엇을 만들지), <b>형식</b>(분량, 표인지 글인지, 누구에게 보내는지). 아래 카드의 좋은 예는 모두 이 틀입니다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>직군별 프롬프트 카드</h2>
+    <p class="sec-cap">왼쪽처럼 묻던 걸 오른쪽처럼 바꾸는 게 코칭의 전부입니다. 실데이터는 넣지 않고, 구조만 설명하거나 치환한 값을 씁니다.</p>
+
+    <h3 class="role">생산관리 <small>실적 집계와 지시 문서가 많은 자리</small></h3>
+    <div class="cards">
+      <div class="card">
+        <div class="sit">주간 실적 요약 보고</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>실적 보고서 좀 써줘.</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>아래 표는 라인별 주간 생산량과 수율이야(값은 치환함). 팀장 보고용으로 5줄 요약을 만들어 줘. 전주 대비 변화가 큰 라인을 먼저 언급하고, 마지막 줄은 다음 주 확인할 항목으로.</p>
+        <p class="why">데이터, 독자, 분량, 순서까지 정하면 고칠 일이 줄어듭니다.</p>
+      </div>
+      <div class="card">
+        <div class="sit">작업지시서 문구 정리</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>작업지시서 만들어 줘.</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>기존 지시서 문단을 붙여 넣을게. 형식은 그대로 두고, 바뀐 부분만 반영해 줘. 바뀐 건 두 가지야. 검사 주기가 4시간에서 2시간으로, 담당 확인란이 1개에서 2개로.</p>
+        <p class="why">전체를 새로 쓰게 하면 형식이 흔들립니다. 바뀐 항목만 짚어 주는 게 안전합니다.</p>
+      </div>
+      <div class="card">
+        <div class="sit">회의록에서 할 일 뽑기</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>회의록 정리해 줘.</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>아래 회의 메모에서 실행 항목만 뽑아 표로 만들어 줘. 열은 할 일, 담당, 기한 세 개. 담당이나 기한이 안 정해진 항목은 표 아래에 따로 모아 줘.</p>
+        <p class="why">미정 항목을 따로 모으게 하면 회의에서 빠뜨린 결정이 드러납니다.</p>
+      </div>
+    </div>
+
+    <h3 class="role">품질 <small>수치 해석과 대외 문서가 많은 자리</small></h3>
+    <div class="cards">
+      <div class="card">
+        <div class="sit">불량 원인 가설 넓히기</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>(실제 수율 데이터를 통째로 붙여 넣고) 왜 떨어졌어?</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>도금 공정에서 특정 요일에만 불량이 늘어나는 패턴이 있어. 실데이터는 못 올리니까 상황만 설명할게. 이런 경우 현장에서 점검할 후보를 설비, 자재, 작업 조건으로 나눠서 질문 형태로 만들어 줘.</p>
+        <p class="why">실데이터 없이도 점검 목록은 만들 수 있습니다. 판단은 데이터를 아는 사람이 합니다.</p>
+      </div>
+      <div class="card">
+        <div class="sit">고객사 영문 회신 초안</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>영어로 메일 써줘.</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>해외 고객사 품질 담당자에게 보낼 회신이야. 요지는 세 문장으로 정리했어(내용은 치환함). 정중하되 사과는 아닌 톤으로, 10문장 이내, 마지막에 후속 일정 확인 문장을 넣어 줘. 회사명과 제품명은 [A사], [제품X]로 남겨 둬.</p>
+        <p class="why">톤과 길이를 정해 주고, 고유명사는 자리표시자로 남기는 습관이 보안까지 지킵니다.</p>
+      </div>
+      <div class="card">
+        <div class="sit">검사 기준 문서 초안</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>검사 기준서 양식 알려줘.</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>외관 검사 기준서 초안을 만들 거야. 항목, 판정 기준, 판정 예시, 재검 조건 네 열로 표를 만들고, 항목은 내가 불러 주는 여섯 개만 채워 줘. 수치 기준은 비워 두면 내가 넣을게.</p>
+        <p class="why">기준 수치를 AI가 지어내지 않게 비워 두는 게 핵심입니다.</p>
+      </div>
+    </div>
+
+    <h3 class="role">사무지원 <small>공지, 정리, 엑셀이 많은 자리</small></h3>
+    <div class="cards">
+      <div class="card">
+        <div class="sit">전사 공지문 작성</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>주차장 공사 공지 써줘.</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>사내 게시판용 공지야. 대상은 전 직원, 내용은 다음 주 화요일부터 이틀간 지하 주차장 일부 통제. 꼭 들어갈 것: 기간, 대체 주차 위치, 문의처. 다섯 문장 이내로, 공손하지만 딱딱하지 않게.</p>
+        <p class="why">필수 항목을 못 박으면 빠뜨림이 없고, 톤 지정으로 재작성이 줄어듭니다.</p>
+      </div>
+      <div class="card">
+        <div class="sit">엑셀 함수 물어보기</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>엑셀에서 집계 어떻게 해?</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>A열이 부서명, B열이 금액인 표가 있어. 부서별 합계를 D열에 만들고 싶어. 함수식을 알려 주고, 부서가 늘어나도 수식을 안 고치게 하는 방법도 같이 알려 줘.</p>
+        <p class="why">열 구조와 원하는 결과 위치를 말하면 바로 붙여 넣을 수 있는 답이 옵니다.</p>
+      </div>
+      <div class="card">
+        <div class="sit">긴 문서 요약</div>
+        <p class="ex bad"><span class="tag">✕ 이렇게 말고</span>이 문서 요약해 줘.</p>
+        <p class="ex good"><span class="tag">○ 이렇게</span>이건 30쪽짜리 안전 교육 자료야(사외 공개 자료). 현장 게시용 1쪽 요약을 만들어 줘. 작업자가 지켜야 할 행동 중심으로 추리고, 처벌이나 법 조항은 빼 줘.</p>
+        <p class="why">같은 문서도 목적에 따라 요약이 달라집니다. 용도를 먼저 말해야 합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="security">
+  <div class="wrap">
+    <h2>보안 수칙: 쓰되, 새지 않게</h2>
+    <p class="sec-cap">AI를 넓게 쓰자는 가이드일수록 새면 안 되는 정보의 경계를 같이 그어야 합니다. 아래는 그 경계의 예시 버전입니다.</p>
+    <div class="cols">
+      <div>
+        <h4>외부 AI에 넣지 않는 것</h4>
+        <ul>
+          <li>고객사 이름과 거래 조건이 드러나는 문서</li>
+          <li>실제 수율, 불량률, 생산 계획 수치</li>
+          <li>도면, 사양서, 공정 조건 등 기술 자료</li>
+          <li>임직원과 고객의 개인정보</li>
+          <li>미공개 재무, 인사, 투자 정보</li>
+        </ul>
+      </div>
+      <div class="ok">
+        <h4>대신 이렇게 합니다</h4>
+        <ul>
+          <li>실제 값은 [A사], [00%]처럼 치환하고 구조만 설명</li>
+          <li>문서 전체 대신 필요한 문단만 골라서 사용</li>
+          <li>업무 데이터는 회사가 승인한 계정에서만</li>
+          <li>AI가 만든 수치와 근거는 원출처와 대조 후 사용</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>구분</th><th>쓸 수 있는 일</th><th>예</th></tr></thead>
+        <tbody>
+          <tr><td>회사 승인 계정 AI</td><td>업무 문서 작성, 사내 자료 요약, 데이터 정리</td><td>회사 계정으로 로그인한 승인 툴</td></tr>
+          <tr><td>개인 계정 무료 AI</td><td>일반 지식 검색, 공개 자료 학습</td><td>업무 데이터 입력 금지</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="foot-note">위 목록과 표는 이 가이드를 위해 만든 샘플 정책입니다. 실제 기준은 회사 보안 규정이 우선하고, 이 문서는 그 규정을 현장 언어로 옮기는 방식의 예시입니다.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><a href="../">최재봉 포트폴리오</a> · 이 문서의 상황과 수치는 가상입니다.</p>
+  </div>
+</footer>
+
+<script>
+const btnTheme = document.getElementById('btn-theme');
+function syncThemeLabel() {
+  btnTheme.textContent = document.documentElement.dataset.theme === 'dark' ? '라이트' : '다크';
+}
+btnTheme.addEventListener('click', () => {
+  const dark = document.documentElement.dataset.theme === 'dark';
+  if (dark) delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = 'dark';
+  try { localStorage.setItem('pf-theme', dark ? 'light' : 'dark'); } catch (e) {}
+  syncThemeLabel();
+});
+syncThemeLabel();
+</script>
+
+</body>
+</html>
