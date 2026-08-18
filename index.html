@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>최재봉 — AI 활용·프롬프트 코칭 포트폴리오</title>
+<meta name="description" content="비개발 직원의 AI 활용을 돕고, 현업에 필요한 기능은 직접 만들어 배포까지 완주한 실무 기록.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script>try{if(localStorage.getItem('pf-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
+<style>
+:root {
+  --ink: #1d1d29;
+  --ink-soft: #5a5a72;
+  --line: #e7e7f0;
+  --bg: #ffffff;
+  --bg-soft: #f7f7fc;
+  --point: #6d5ae6;       /* 포인트 1색: 바이올렛 */
+  --point-deep: #5747c9;
+  --point-soft: #efedfc;
+  --hero-wash-a: #f2f0fc;
+  --hero-wash-b: #fdf6f9;
+  --glass: rgba(255, 255, 255, 0.65);
+  --glass-soft: rgba(255, 255, 255, 0.7);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-sm: 0 1px 2px rgba(29, 29, 60, 0.05), 0 4px 14px rgba(29, 29, 60, 0.05);
+  --shadow-md: 0 2px 6px rgba(29, 29, 60, 0.06), 0 14px 34px rgba(29, 29, 60, 0.09);
+}
+:root[data-theme="dark"] {
+  --ink: #e9e9f4;
+  --ink-soft: #a4a4c0;
+  --line: #2b2b3e;
+  --bg: #131320;
+  --bg-soft: #1a1a2a;
+  --point: #8b7cf0;
+  --point-deep: #a89bf5;
+  --point-soft: rgba(139, 124, 240, 0.16);
+  --hero-wash-a: rgba(109, 90, 230, 0.14);
+  --hero-wash-b: rgba(194, 56, 120, 0.08);
+  --glass: rgba(19, 19, 32, 0.65);
+  --glass-soft: rgba(26, 26, 42, 0.7);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 34px rgba(0, 0, 0, 0.3);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  word-break: keep-all;
+  font-size: 16px;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease);
+}
+.wrap { max-width: 920px; margin: 0 auto; padding: 0 20px; }
+section { padding: 64px 0; }
+h2 { font-size: 1.6rem; letter-spacing: -0.015em; line-height: 1.3; margin-bottom: 6px; }
+.sec-cap { color: var(--ink-soft); font-size: 0.95rem; margin-bottom: 30px; }
+a { color: var(--point); }
+
+/* 헤더 — 반투명 스티키 */
+header.top {
+  position: sticky; top: 0; z-index: 20;
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(29, 29, 60, 0.06);
+  padding: 10px 0;
+  font-size: 0.9rem;
+}
+header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.ident { min-width: 0; }
+.ident small {
+  display: block; font-size: 0.72rem; font-weight: 600;
+  color: var(--ink-soft); letter-spacing: -0.01em; line-height: 1.4;
+}
+.ident .name { font-weight: 800; letter-spacing: -0.01em; font-size: 0.98rem; }
+.top-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+header.top nav { display: flex; gap: 14px; }
+header.top nav a { text-decoration: none; color: var(--ink-soft); transition: color 0.2s var(--ease); }
+header.top nav a:hover { color: var(--point); }
+.ctrl { display: flex; align-items: center; gap: 6px; }
+.ctrl button {
+  font: inherit; font-size: 0.78rem; font-weight: 700;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink-soft);
+  border-radius: 999px; padding: 4px 11px; cursor: pointer;
+  transition: background 0.2s var(--ease), color 0.2s, border-color 0.2s;
+}
+.ctrl button:hover { border-color: var(--point); color: var(--point); }
+.ctrl button.active { background: var(--point); border-color: var(--point); color: #fff; }
+.ctrl .lang-seg { display: flex; gap: 0; }
+.ctrl .lang-seg button { border-radius: 999px 0 0 999px; }
+.ctrl .lang-seg button + button { border-radius: 0 999px 999px 0; border-left: none; }
+
+/* S1 히어로 — 옅은 파스텔 워시 */
+.hero {
+  padding: 88px 0 72px;
+  background:
+    radial-gradient(900px 460px at 85% -10%, var(--hero-wash-a) 0%, rgba(236, 234, 253, 0) 62%),
+    radial-gradient(700px 380px at 5% 115%, var(--hero-wash-b) 0%, rgba(253, 238, 244, 0) 58%);
+}
+.hero h1 {
+  font-size: clamp(1.85rem, 4.6vw, 2.6rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.hero .thesis { font-size: 1.05rem; color: var(--ink-soft); max-width: 580px; margin: 0 0 20px; }
+.hero .kw { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 26px; }
+.hero .kw span {
+  border: 1px solid var(--line); color: var(--ink-soft); background: var(--bg);
+  font-size: 0.85rem; font-weight: 600; padding: 6px 14px; border-radius: 8px;
+}
+.hero .meta-proof {
+  border-left: 3px solid var(--point);
+  padding: 12px 16px;
+  background: var(--glass-soft);
+  border-radius: 0 12px 12px 0;
+  font-size: 0.95rem; margin-bottom: 30px;
+}
+.hero .links { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero .links a {
+  border-radius: 999px;
+  padding: 11px 22px; text-decoration: none; font-size: 0.93rem; font-weight: 600;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.2s;
+}
+.hero .links a.primary { background: var(--point); color: #fff; box-shadow: var(--shadow-sm); }
+.hero .links a:not(.primary) { border: 1px solid var(--line); color: var(--ink); background: var(--glass-soft); }
+.hero .links a:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--point); }
+.hero .links a.primary:hover { border-color: transparent; }
+.hero .links a:active { transform: scale(0.97); }
+
+/* 공고 직무 매핑 스트립 */
+.map { padding: 34px 0; border-bottom: 1px solid var(--line); }
+.map h2 { font-size: 1.05rem; margin-bottom: 16px; }
+.map-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.map-grid a {
+  display: block; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px;
+  background: var(--bg); box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.2s;
+}
+.map-grid a:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(109, 90, 230, 0.4); }
+.map-grid b { display: block; font-size: 0.9rem; letter-spacing: -0.01em; }
+.map-grid small { color: var(--ink-soft); font-size: 0.8rem; }
+.map-grid .arrow { color: var(--point-deep); font-weight: 700; font-size: 0.8rem; }
+
+/* S2 자동화 실적 — 라운드 카드 컨테이너 */
+.auto-card {
+  border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: var(--shadow-sm); overflow: hidden; background: var(--bg);
+}
+
+/* 실물 산출물 */
+.artifacts .art-row { display: flex; gap: 14px; align-items: flex-start; overflow-x: auto; padding-bottom: 6px; }
+.artifacts figure { margin: 0; flex-shrink: 0; }
+.artifacts img {
+  height: 180px; width: auto; display: block;
+  border: 1px solid var(--line); border-radius: 10px;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.2s;
+}
+.artifacts a, .artifacts button.zoom {
+  display: block; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; text-align: left;
+}
+.artifacts a:hover img, .artifacts button.zoom:hover img {
+  transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(109, 90, 230, 0.45);
+}
+.artifacts figcaption { font-size: 0.8rem; color: var(--ink-soft); margin-top: 6px; max-width: 340px; }
+.artifacts figcaption .hint { color: var(--point-deep); font-weight: 600; }
+dialog.lightbox {
+  margin: auto;
+  border: none; border-radius: 12px; padding: 10px;
+  background: var(--bg); max-width: min(92vw, 1100px);
+  box-shadow: var(--shadow-md);
+}
+dialog.lightbox::backdrop { background: rgba(15, 15, 30, 0.72); }
+dialog.lightbox img { max-width: 100%; max-height: 82vh; display: block; border-radius: 8px; cursor: zoom-out; }
+.auto-head, .auto-row summary {
+  display: grid;
+  grid-template-columns: 2fr 1.6fr 1.8fr 1.1fr;
+  gap: 14px; align-items: center;
+}
+.auto-head {
+  font-size: 0.78rem; font-weight: 700; color: var(--ink-soft);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 16px 20px 12px; border-bottom: 1px solid var(--line);
+  background: var(--bg-soft);
+}
+.auto-head span:last-child { text-align: right; }
+.auto-row { border-bottom: 1px solid var(--line); }
+.auto-row:last-child { border-bottom: none; }
+.auto-row summary {
+  list-style: none; cursor: pointer; padding: 19px 48px 19px 20px; font-size: 0.95rem;
+  transition: background 0.25s var(--ease);
+  position: relative;
+}
+.auto-row summary::-webkit-details-marker { display: none; }
+.auto-row summary::after {
+  content: ""; position: absolute; right: 22px; top: 50%;
+  width: 8px; height: 8px;
+  border: solid var(--ink-soft); border-width: 0 2px 2px 0;
+  transform: translateY(-70%) rotate(45deg);
+  transition: transform 0.25s var(--ease);
+}
+.auto-row[open] summary::after { transform: translateY(-30%) rotate(-135deg); }
+.auto-row summary:hover { background: var(--bg-soft); }
+.auto-row summary:active { background: var(--point-soft); }
+.auto-row .subject { font-weight: 700; letter-spacing: -0.01em; }
+.auto-row .tools { color: var(--ink-soft); font-size: 0.88rem; }
+.auto-row .shift { font-variant-numeric: tabular-nums; }
+.auto-row .shift .after { color: var(--point-deep); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.01em; }
+.auto-row .save { color: var(--point-deep); font-weight: 800; font-size: 1.1rem; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; text-align: right; }
+.auto-row .detail {
+  padding: 4px 20px 22px; font-size: 0.92rem; color: var(--ink-soft);
+  max-width: 720px;
+}
+.auto-row .detail > b { color: var(--point-deep); }
+.auto-row .demo-link {
+  display: inline-block; margin-top: 6px; font-size: 0.8rem; font-weight: 600;
+  color: var(--point-deep); background: var(--point-soft);
+  padding: 3px 12px; border-radius: 999px; text-decoration: none;
+}
+.auto-row .demo-link:hover { background: var(--point); color: #fff; }
+.mobile-label { display: none; }
+
+/* S3 딥다이브 */
+.deep { background: var(--bg-soft); }
+.steps { list-style: none; counter-reset: step; margin: 28px 0; }
+.steps li {
+  counter-increment: step; position: relative;
+  padding: 0 0 24px 48px; border-left: 2px solid var(--line); margin-left: 16px;
+}
+.steps li:last-child { border-left-color: transparent; padding-bottom: 0; }
+.steps li::before {
+  content: counter(step);
+  position: absolute; left: -17px; top: 0;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--point); color: #fff;
+  font-weight: 700; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 10px rgba(109, 90, 230, 0.3);
+}
+.steps b { display: block; letter-spacing: -0.01em; }
+.steps small { color: var(--ink-soft); }
+
+/* 수치 밴드 — 그라데이션 스탯 */
+.metric-cards {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+  margin: 28px 0;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 12px; padding: 26px 16px;
+  box-shadow: var(--shadow-sm);
+}
+.metric-cards .card { text-align: center; padding: 0 8px; }
+.metric-cards .card + .card { border-left: 1px solid var(--line); }
+.metric-cards .num {
+  font-size: clamp(1.6rem, 3.4vw, 2.1rem); font-weight: 800; color: var(--point-deep);
+  letter-spacing: -0.02em; line-height: 1.2; font-variant-numeric: tabular-nums;
+}
+.metric-cards .label { font-size: 0.87rem; color: var(--ink-soft); margin-top: 2px; }
+.bridge { font-size: 0.98rem; margin: 8px 0 26px; }
+.deep-shot { border: 1px solid var(--line); border-radius: 12px; width: 100%; height: auto; display: block; box-shadow: var(--shadow-sm); }
+.deep .visit {
+  display: inline-block; margin: 0 0 16px;
+  background: var(--point); color: #fff; text-decoration: none;
+  padding: 11px 22px; border-radius: 999px; font-size: 0.93rem; font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.deep .visit:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.deep .visit:active { transform: scale(0.97); }
+
+/* S4 갤러리 */
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.gallery .item {
+  border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  text-decoration: none; color: var(--ink); display: block; background: var(--bg);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.2s;
+}
+.gallery .item:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(109, 90, 230, 0.4); }
+.gallery .item:active { transform: scale(0.98); }
+.gallery img { width: 100%; height: auto; aspect-ratio: 16/10; object-fit: cover; object-position: top; display: block; }
+.gallery .cap { padding: 14px 16px 16px; }
+.gallery .cap b { display: block; font-size: 0.94rem; letter-spacing: -0.01em; }
+.gallery .cap small { color: var(--ink-soft); font-size: 0.83rem; }
+.gallery .tag {
+  display: inline-block; margin-top: 10px; font-size: 0.75rem; font-weight: 600;
+  color: var(--point-deep); background: var(--point-soft); padding: 3px 10px; border-radius: 6px;
+}
+
+/* S5 도구 */
+.stack dl { display: grid; grid-template-columns: 140px 1fr; gap: 12px 18px; font-size: 0.95rem; }
+.stack dt { font-weight: 700; }
+.stack dd { color: var(--ink-soft); }
+.way {
+  margin-top: 24px; padding: 16px 20px;
+  background: var(--bg-soft); border: 1px solid var(--line); border-radius: 12px;
+  font-size: 0.95rem;
+}
+
+/* S6 검증 습관 */
+.quality p { max-width: 700px; margin-bottom: 20px; }
+.quality ul { list-style: none; }
+.quality li { padding: 10px 0 10px 26px; position: relative; border-top: 1px solid var(--line); }
+.quality li::before {
+  content: ""; position: absolute; left: 4px; top: 19px;
+  width: 8px; height: 8px; border-radius: 50%; background: var(--point);
+}
+
+/* S7 푸터 */
+footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.88rem; color: var(--ink-soft); }
+
+/* 스크롤 페이드 */
+.fade { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.fade.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade { opacity: 1; transform: none; transition: none; }
+  .hero .links a, .deep .visit, .gallery .item { transition: none; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  header.top { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+:focus-visible { outline: 2px solid var(--point); outline-offset: 2px; }
+
+/* 모바일: 표 → 카드 */
+@media (max-width: 720px) {
+  section { padding: 48px 0; }
+  header.top .wrap { flex-wrap: wrap; gap: 6px 12px; }
+  .top-right { width: 100%; flex-shrink: 1; flex-wrap: wrap; gap: 8px 12px; justify-content: space-between; }
+  header.top nav { gap: 0; flex-wrap: wrap; }
+  header.top nav a { margin: 0 12px 0 0; }
+  .hero { padding: 56px 0 48px; }
+  .auto-card { border: none; box-shadow: none; border-radius: 0; overflow: visible; background: transparent; }
+  .auto-head { display: none; }
+  .auto-row {
+    border: 1px solid var(--line); border-radius: 16px; margin-bottom: 12px;
+    background: var(--bg); box-shadow: var(--shadow-sm); overflow: hidden;
+  }
+  .auto-row:last-child { border-bottom: 1px solid var(--line); }
+  .auto-row summary { display: block; padding: 16px 44px 16px 16px; }
+  .auto-row summary::after { top: 26px; }
+  .auto-row summary > span { display: block; }
+  .auto-row .tools { margin: 4px 0; }
+  .auto-row .save { text-align: left; }
+  .auto-row .detail { padding: 4px 16px 18px; }
+  .map-grid { grid-template-columns: 1fr; }
+  .mobile-label {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.04em; margin-right: 6px;
+  }
+  .metric-cards { grid-template-columns: 1fr; gap: 18px; padding: 24px 16px; }
+  .metric-cards .card + .card { border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.22); padding-top: 18px; }
+  .gallery { grid-template-columns: 1fr; }
+  .stack dl { grid-template-columns: 1fr; gap: 2px; }
+  .stack dt { margin-top: 10px; }
+}
+@media (min-width: 721px) and (max-width: 980px) {
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* 인쇄: A4 1~2장 요약 — 항상 라이트 팔레트 */
+@media print {
+  @page { margin: 7mm 11mm; }
+  :root, :root[data-theme="dark"] {
+    --ink: #1d1d29; --ink-soft: #5a5a72; --line: #e7e7f0;
+    --bg: #ffffff; --bg-soft: #f7f7fc;
+    --point: #6d5ae6; --point-deep: #5747c9; --point-soft: #efedfc;
+    --glass: none; --glass-soft: none;
+  }
+  body { font-size: 10.5px; line-height: 1.35; }
+  .map, .ctrl { display: none; }
+  .artifacts { display: none !important; }
+  header.top nav, .gallery img, .deep-shot, .fade { display: none; }
+  .fade { opacity: 1 !important; transform: none !important; display: revert; }
+  header.top { position: static; background: none; backdrop-filter: none; }
+  .hero .links { display: block; }
+  .hero .links a, .hero .links a.primary, .deep .visit {
+    display: inline; padding: 0; border: 0; background: none; box-shadow: none;
+    color: var(--ink); font-weight: 400; font-size: 10px;
+  }
+  .hero .links a::after { content: " — " attr(data-url); color: #555; }
+  .hero .links a + a::before { content: " · "; }
+  .deep .visit { font-weight: 700; }
+  .auto-row .detail { display: none; }
+  .auto-row summary::after { display: none; }
+  .auto-row summary { padding-right: 8px; }
+  .auto-row .demo-link { background: none; padding: 0; }
+  .auto-row .demo-link::after { content: " — " attr(data-url); font-size: 9px; font-weight: 400; color: #555; }
+  section { padding: 8px 0; }
+  .auto-card, .auto-row, .gallery .item, .metric-cards, .deep .visit { box-shadow: none; }
+  .auto-card { border-radius: 0; border: none; }
+  .auto-head { background: none; border-bottom: 2px solid var(--ink); }
+  .auto-row, .metric-cards, .steps li { page-break-inside: avoid; }
+  h2 { font-size: 13px; margin-bottom: 2px; }
+  .sec-cap { margin-bottom: 8px; }
+  .hero { padding: 6px 0; background: none; }
+  .hero h1 { font-size: 15px; }
+  .hero .thesis { font-size: 11px; margin: 0 0 6px; }
+  .ident small { font-size: 9px; }
+  .hero .kw { margin-bottom: 6px; }
+  .hero .kw span { padding: 2px 8px; font-size: 9px; }
+  .hero .meta-proof { margin-bottom: 6px; padding: 4px 10px; background: none; }
+  .auto-row summary { padding: 7px 8px; font-size: 10.5px; }
+  .auto-head { padding: 0 8px 4px; }
+  .deep { background: none; }
+  section { padding: 6px 0; }
+  .steps { margin: 8px 0; }
+  .steps li { padding: 0 0 4px 40px; }
+  .steps li::before { box-shadow: none; }
+  .metric-cards { background: none; border: 1px solid #ccc; border-radius: 8px; gap: 6px; margin: 10px 0; padding: 8px; }
+  .metric-cards .card + .card { border-left: 1px solid #ddd; }
+  .metric-cards .num { font-size: 13px; color: var(--point-deep); }
+  .metric-cards .label { color: #555; }
+  .bridge { margin: 4px 0 8px; }
+  .gallery { grid-template-columns: 1fr; gap: 2px; }
+  .gallery .item { border: none; border-radius: 0; }
+  .gallery .cap { padding: 1px 0; line-height: 1.3; }
+  .gallery .cap b { font-size: 10px; }
+  .gallery .cap small { font-size: 9px; }
+  .gallery .cap br { display: none; }
+  .gallery .cap b::after, .hero .meta-proof a::after, .deep-links a::after, .save a::after {
+    content: " — " attr(data-url); font-weight: 400; color: #555;
+  }
+  .gallery .tag { display: none; }
+  .save a::after { font-size: 9px; font-weight: 400; }
+  .stack dl { gap: 2px 14px; }
+  .way { margin-top: 8px; padding: 6px 10px; }
+  .quality p { margin-bottom: 4px; }
+  .quality li { padding: 2px 0 2px 16px; }
+  .quality li::before { top: 7px; width: 6px; height: 6px; }
+  footer { padding: 4px 0 0; }
+  .way { margin-top: 4px; }
+  .sec-cap { margin-bottom: 6px; }
+  .stack dl { font-size: 10px; }
+  a { color: var(--ink); text-decoration: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="ident">
+      <small data-en="Applicant · ICT Security Team (Office Track), ISU PETASYS">이수페타시스 ICT보안팀 사무전담직 지원자</small>
+      <span class="name" data-en="Jaebong Choi · Portfolio">최재봉 포트폴리오</span>
+    </div>
+    <div class="top-right">
+      <nav>
+        <a href="#auto" data-en="Automation">자동화 실적</a>
+        <a href="#deep" data-en="Case Study">대표 사례</a>
+        <a href="#gallery" data-en="Work">제작물</a>
+        <a href="#stack" data-en="Tools">도구</a>
+      </nav>
+      <div class="ctrl">
+        <span class="lang-seg">
+          <button id="btn-ko" type="button">KO</button><button id="btn-en" type="button">EN</button>
+        </span>
+        <button id="btn-theme" type="button">다크</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- S1 히어로 -->
+<section class="hero">
+  <div class="wrap">
+    <h1 data-en="AI Enablement · Prompt Coaching · AI Feature Building">사내 AI 활용 지원 · 프롬프트 코칭 · AI 기능 제작</h1>
+    <p class="thesis" data-en="I help non-developers put AI to work, and when a team needs a tool, I build and deploy it myself.">비개발 직원이 AI를 실무에 쓰도록 돕고, 현업에 필요한 기능은 직접 만들어 배포까지 완주합니다.</p>
+    <div class="kw">
+      <span data-en="5 sites shipped">사이트 5종 배포 완주</span>
+      <span data-en="~20 custom skills in operation">커스텀 스킬 약 20종 운영</span>
+      <span data-en="~2 hours saved per blog post">블로그 편당 약 2시간 절감</span>
+    </div>
+    <p class="meta-proof" data-en="This page itself was built and deployed with Claude Code. <a href='https://github.com/jaebong-choi/isu-ai-portfolio' data-url='github.com/jaebong-choi/isu-ai-portfolio'>Build-process repo</a>">
+      이 페이지 자체도 Claude Code로 제작·배포되었습니다.
+      <a href="https://github.com/jaebong-choi/isu-ai-portfolio" data-url="github.com/jaebong-choi/isu-ai-portfolio">제작 과정 repo</a>
+    </p>
+    <div class="links">
+      <a class="primary" href="mailto:cjbong23@hanmail.net" data-url="cjbong23@hanmail.net" data-en="Email">이메일</a>
+      <a href="https://jaebong-portfolio.vercel.app/general/" data-url="jaebong-portfolio.vercel.app/general" data-en="Full Portfolio">종합 포트폴리오</a>
+    </div>
+  </div>
+</section>
+
+<!-- 공고 직무 매핑 스트립 -->
+<section class="map">
+  <div class="wrap">
+    <h2 data-en="How this maps to the three duties in the posting">공고의 세 가지 직무에 이렇게 연결됩니다</h2>
+    <div class="map-grid">
+      <a href="prompt-guide/">
+        <b data-en="① In-house AI support &amp; prompt coaching">① 사내 AI 지원·프롬프트 코칭</b>
+        <small data-en="Per-role prompt guide + security rules">직군별 프롬프트 가이드 + 보안 수칙</small>
+        <span class="arrow" data-en="Guide →">가이드 →</span>
+      </a>
+      <a href="report-demo/">
+        <b data-en="② AI features from team needs">② 현업 요구 기반 AI 기능 개발</b>
+        <small data-en="Excel upload → weekly report demo">공정 실적 엑셀 → 주간 리포트 데모</small>
+        <span class="arrow" data-en="Demo →">데모 →</span>
+      </a>
+      <a href="#auto">
+        <b data-en="③ AI adoption &amp; management">③ AI 활용 및 관리</b>
+        <small data-en="Measured savings + verification habits">실측 절감 실적과 검증 습관</small>
+        <span class="arrow" data-en="Track record →">실적 표 →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- S2 자동화 실적 -->
+<section id="auto" class="fade">
+  <div class="wrap">
+    <h2 data-en="Automation Track Record">자동화 실적</h2>
+    <p class="sec-cap" data-en="Built on the job at a study-abroad company. Click a row to see how each output was verified.">유학 기업 재직 중 실무로 만든 자동화입니다. 행을 누르면 검증 방법이 열립니다.</p>
+
+    <div class="auto-card">
+      <div class="auto-head" aria-hidden="true">
+        <span data-en="Target">자동화 대상</span><span data-en="Tools">사용 도구</span><span>Before → After</span><span data-en="Impact">절감 효과</span>
+      </div>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="Instagram card-news sets (1080×1350)">인스타 카드뉴스(1080×1350) 세트 제작</span>
+          <span class="tools" data-en="Claude skill + Python/Playwright (HTML→PNG rendering)">Claude 스킬 + Python/Playwright (HTML→PNG 렌더링)</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>Manual 3-4 h → <span class='after'>1 h</span>"><span class="mobile-label">Before → After</span>수작업 3~4시간 → <span class="after">1시간</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>2-3 h per set"><span class="mobile-label">절감</span>세트당 2~3시간</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> every number and date is checked against the source, and every rendered card is reviewed before publishing. The workflow is fixed as a skill. Brand colors and layout rules live in the skill, and pages are typeset in HTML and rendered with Playwright."><b>검증:</b> 발행 전에 수치와 날짜를 원문과 대조하고 렌더링 결과를 전수 확인합니다. 비자·정책 뉴스를 카드뉴스로 만드는 작업은 스킬로 고정해 두었습니다. 브랜드 색과 레이아웃 규칙을 스킬에 담아 HTML로 조판한 뒤 Playwright로 렌더링합니다.</p>
+      </details>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="Country study-guide sites: data build &amp; deployment">국가별 유학 안내 사이트 데이터 구축·배포</span>
+          <span class="tools" data-en="Claude Cowork (research &amp; cross-check) + Claude Code (build)">Claude Cowork (조사·교차검증) + Claude Code (구현)</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>Manual ~3 days → <span class='after'>4-5 h</span>"><span class="mobile-label">Before → After</span>수작업 3일 → <span class="after">4~5시간</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>5 sites shipped"><span class="mobile-label">절감</span>사이트 5종 배포 완주</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> collected admission and tuition data was checked against each university's official pages before going live. Researched with Cowork, built with Claude Code, deployed on GitHub Pages. Five sites in total: US, UK, Australia, Canada, and the hub."><b>검증:</b> 수집한 진학 요건과 학비 데이터를 각 대학 공식 페이지와 대조해 확인한 뒤 반영했습니다. Cowork로 조사하고 Claude Code로 구현해 GitHub Pages에 배포했습니다. 미국, 영국, 호주, 캐나다 진단 사이트에 허브까지 5종입니다.</p>
+      </details>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="Naver blog articles (review included)">네이버 블로그 원고 생산 (검수 포함)</span>
+          <span class="tools" data-en="Claude skill (SEO structure + style review)">Claude 스킬 (SEO 구조화 + 문체 검수)</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>2-3 h → <span class='after'>30 min</span> per post"><span class="mobile-label">Before → After</span>편당 2~3시간 → <span class="after">30분</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>~2 h per post"><span class="mobile-label">절감</span>편당 약 2시간</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> quoted figures are confirmed on the source page, and drafts pass a review step that removes AI-sounding patterns before publishing. Naver SEO structure and style rules are packaged as a skill that produces the first draft."><b>검증:</b> 인용하는 수치는 출처 페이지에서 직접 확인하고, AI 문형을 걸러내는 검수 단계를 거쳐 발행합니다. 네이버 SEO 구조와 문체 규칙을 스킬로 만들어 초안을 뽑습니다.</p>
+      </details>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="9:16 data graphics for Shorts">쇼츠용 9:16 데이터 그래픽 제작</span>
+          <span class="tools" data-en="Claude skill + Playwright rendering">Claude 스킬 + Playwright 렌더링</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>2-3 h → <span class='after'>30 min</span> per cut"><span class="mobile-label">Before → After</span>컷당 2~3시간 → <span class="after">30분</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>~2 h per cut"><span class="mobile-label">절감</span>컷당 약 2시간</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> figures are checked against the script's sources before rendering. Screen directions in a Shorts script become tables, charts and timeline cards (1080×1920), with narrative facts restructured as data graphics."><b>검증:</b> 수치는 대본의 출처와 대조한 뒤 렌더링합니다. 쇼츠 대본의 화면 지시를 표와 그래프, 타임라인 카드(1080×1920)로 바꾸면서 서술형 정보를 데이터 그래픽으로 재구성합니다.</p>
+      </details>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="Pre-departure orientation briefings">출국 전 오리엔테이션 반복 안내</span>
+          <span class="tools" data-en="Notion system (UK · Canada · Australia)">Notion 시스템 (영국·캐나다·호주 3개국)</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>1 h per case → <span class='after'>self-serve</span>"><span class="mobile-label">Before → After</span>구두 안내 1시간/건 → <span class="after">셀프 안내</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>40 min per case"><span class="mobile-label">절감</span>건당 40분</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> students read the guide themselves and consultations cover only open questions, about 20 minutes per case. A briefing once repeated verbally for an hour is standardized as a per-country Notion document system, built without code, so nothing gets left out."><b>검증:</b> 학생이 스스로 읽고 확인 사항만 상담으로 남겨, 건당 확인 시간은 20분 수준으로 줄었습니다. 상담원이 매번 1시간씩 구두로 반복하던 출국 전 안내를 국가별 Notion 문서 체계로 코드 없이 표준화해, 안내 누락을 구조적으로 방지합니다.</p>
+      </details>
+
+      <details class="auto-row demo">
+        <summary>
+          <span class="subject"><span data-en="Production report generator (demo)">공정 실적 자동 리포트 (데모)</span><br><a class="demo-link" href="report-demo/" data-url="jaebong-choi.github.io/isu-ai-portfolio/report-demo" data-en="Demo page →">데모 페이지 →</a></span>
+          <span class="tools" data-en="Web demo (Excel parsing in the browser)">웹 데모 (브라우저에서 엑셀 파싱)</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>Manual weekly summary → <span class='after'>auto report</span>"><span class="mobile-label">Before → After</span>수작업 주간 집계 → <span class="after">자동 리포트</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>Fictional 2-week sample → 1 report"><span class="mobile-label">절감</span>가상 2주치 실적 → 리포트 1건</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> the anomaly rule is printed on the page so anyone can recheck a flagged cell by hand. Upload a fictional production spreadsheet (daily output, yield and defect types per line) and the page builds a weekly summary with anomalies highlighted. All sample data is fictional."><b>검증:</b> 이상치 판정 기준을 페이지에 그대로 적어 두어, 표시된 값은 누구든 손으로 재검산할 수 있습니다. 가상의 공정 실적 엑셀(라인별 생산량·수율·불량 유형)을 올리면 주간 요약과 이상치 하이라이트를 만들어 주는 데모입니다. 샘플 데이터는 전부 가상입니다.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- 실물 산출물 -->
+<section id="artifacts" class="artifacts fade">
+  <div class="wrap">
+    <h2 data-en="Real Artifacts">실물 산출물</h2>
+    <p class="sec-cap" data-en="Deliverables and work logs from the job.">실무에서 실제로 쓰던 시스템과 작업 기록입니다.</p>
+    <div class="art-row">
+      <figure>
+        <button class="zoom" type="button" aria-label="사진 크게 보기">
+          <img src="assets/art-ot.webp" alt="출국 전 오리엔테이션 진행 모습" loading="lazy">
+        </button>
+        <figcaption data-en="Running a pre-departure orientation (July 2023) <span class='hint'>· enlarge</span>">출국 전 오리엔테이션을 진행하던 모습 (2023. 7) <span class="hint">· 크게 보기</span></figcaption>
+      </figure>
+      <figure>
+        <a href="https://app.notion.com/p/OT-3869ef3ab7188119a79fca3e848b5e7d" target="_blank" rel="noopener">
+          <img src="assets/art-notion.webp" alt="국가별 출국 OT Notion 시스템" loading="lazy">
+        </a>
+        <figcaption data-en="Per-country pre-departure OT system in Notion <span class='hint'>· open ↗</span>">국가별 출국 OT Notion 시스템 (캐나다 폴더) <span class="hint">· 열어 보기 ↗</span></figcaption>
+      </figure>
+      <figure>
+        <a href="https://github.com/jaebong-choi/uk-study-guide/commits/main/" target="_blank" rel="noopener">
+          <img src="assets/art-commits.webp" alt="영국 진단 사이트의 git 작업 기록" loading="lazy">
+        </a>
+        <figcaption data-en="Work log of the UK diagnostic site (git commits) <span class='hint'>· open ↗</span>">영국 진단 사이트의 작업 기록 (git 커밋) <span class="hint">· 열어 보기 ↗</span></figcaption>
+      </figure>
+    </div>
+    <dialog class="lightbox" id="lightbox">
+      <img src="assets/art-ot.webp" alt="출국 전 오리엔테이션 진행 모습 (크게 보기)">
+    </dialog>
+  </div>
+</section>
+
+<!-- S3 대표 사례 딥다이브 -->
+<section id="deep" class="deep fade">
+  <div class="wrap">
+    <h2 data-en="Case Study: UK University Data, from Research to Launch">대표 사례: 영국 대학 진학 데이터, 조사에서 배포까지</h2>
+    <p class="sec-cap" data-en="One project end to end. The steps are the point.">한 건을 처음부터 끝까지. 어떤 단계로 완주했는지가 이 사례의 핵심입니다.</p>
+
+    <ol class="steps">
+      <li><b data-en="Scope">범위 정의</b><small data-en="47 UK universities, including 16 in the QS world top 100">QS 세계 100위 이내 16개교를 포함한 영국 대학 47개교</small></li>
+      <li><b data-en="Research with Claude Cowork">Claude Cowork로 조사</b><small data-en="Undergraduate pathways (foundation · IYO), majors, requirements">학부 진학 경로(파운데이션·IYO)·전공·요건 데이터 수집</small></li>
+      <li><b data-en="Cross-verification">교차 검증</b><small data-en="Figures and requirements checked against each university's official pages">각 대학 공식 페이지와 대조해 수치·요건 확인</small></li>
+      <li><b data-en="Data structuring">데이터 구조화</b><small data-en="Organized into a site-ready schema">사이트에서 쓸 수 있는 스키마로 정리</small></li>
+      <li><b data-en="Built with Claude Code">Claude Code로 구현</b><small data-en="Single-page diagnostic site">단일 페이지 진단 사이트로 개발</small></li>
+      <li><b data-en="Deployed on GitHub Pages">GitHub Pages 배포</b><small>jaebong-choi.github.io/uk-study-guide</small></li>
+    </ol>
+
+    <div class="metric-cards">
+      <div class="card"><div class="num" data-en="47">47교</div><div class="label" data-en="universities listed">수록 대학</div></div>
+      <div class="card"><div class="num" data-en="~800">약 800건</div><div class="label" data-en="data points">데이터 포인트</div></div>
+      <div class="card"><div class="num" data-en="~1 week">약 1주</div><div class="label" data-en="research to launch">조사~배포</div></div>
+    </div>
+
+    <p class="bridge" data-en="Take a requirement, research it, verify against the source, build and ship. Developing AI features from team needs runs in the same order.">요구사항을 받아 조사하고, 원문과 대조해 바로잡고, 구현해 배포까지 마쳤습니다. 현업 요구를 받아 AI 기능을 만드는 일과 같은 순서입니다.</p>
+
+    <p class="deep-links"><a class="visit" href="https://jaebong-choi.github.io/uk-study-guide/" data-url="jaebong-choi.github.io/uk-study-guide" data-en="Open the live site">배포된 사이트 열기</a></p>
+    <img class="deep-shot" src="assets/uk.webp" alt="영국 대학 진학 안내 사이트 화면" loading="lazy" width="1280" height="800">
+  </div>
+</section>
+
+<!-- S4 제작물 갤러리 -->
+<section id="gallery" class="fade">
+  <div class="wrap">
+    <h2 data-en="Work">제작물</h2>
+    <p class="sec-cap" data-en="Every link is live.">전부 실제 배포되어 있는 링크입니다.</p>
+    <div class="gallery">
+      <a class="item" href="report-demo/">
+        <img src="assets/report-demo.webp" alt="공정 실적 자동 리포트 데모" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-choi.github.io/isu-ai-portfolio/report-demo" data-en="Production report generator demo">공정 실적 자동 리포트 데모</b><small data-en="Fictional Excel upload → weekly summary &amp; anomalies">가상 엑셀 업로드 → 주간 요약·이상치</small><br><span class="tag" data-en="Web demo">웹 데모</span></div>
+      </a>
+      <a class="item" href="prompt-guide/">
+        <img src="assets/prompt-guide.webp" alt="프롬프트 코칭 가이드" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-choi.github.io/isu-ai-portfolio/prompt-guide" data-en="Prompt coaching guide">프롬프트 코칭 가이드</b><small data-en="Per-role example prompts + security rules">직군별 예시 프롬프트와 보안 수칙</small><br><span class="tag" data-en="One-pager">원페이지</span></div>
+      </a>
+      <a class="item" href="https://jaebong-choi.github.io/uk-study-guide/">
+        <img src="assets/uk.webp" alt="영국 대학 진학 안내" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-choi.github.io/uk-study-guide" data-en="UK university pathways">영국 대학 진학 안내</b><small data-en="Pathway diagnostics for 47 universities">47개교 학부 진학 경로 진단</small><br><span class="tag">Cowork + Code</span></div>
+      </a>
+      <a class="item" href="https://jaebong-choi.github.io/au-study-guide/">
+        <img src="assets/au.webp" alt="호주 진학 안내" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-choi.github.io/au-study-guide" data-en="Australia study guide">호주 진학 안내</b><small data-en="Bachelor and Master track diagnostics">학부·석사 두 트랙 진학 진단</small><br><span class="tag">Cowork + Code</span></div>
+      </a>
+      <a class="item" href="https://jaebong-choi.github.io/ca-study-guide/">
+        <img src="assets/ca.webp" alt="캐나다 컬리지 진학 안내" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-choi.github.io/ca-study-guide" data-en="Canada college guide">캐나다 컬리지 진학 안내</b><small data-en="Career-immigration and transfer tracks">커리어·이민, 대학 편입 트랙 진단</small><br><span class="tag">Cowork + Code</span></div>
+      </a>
+      <a class="item" href="https://jaebong-choi.github.io/us-study-guide/">
+        <img src="assets/us.webp" alt="미국 유학 진단" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-choi.github.io/us-study-guide" data-en="US study diagnostics">미국 유학 진단</b><small data-en="Direct, pathway and 2+2 routes">Direct·패스웨이·2+2 경로 진단</small><br><span class="tag">Cowork + Code</span></div>
+      </a>
+      <a class="item" href="https://jaebong-choi.github.io/study-guide-hub/">
+        <img src="assets/hub.webp" alt="유학 진단 허브" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-choi.github.io/study-guide-hub" data-en="Study Guide Hub">유학 진단 허브</b><small data-en="Gateway to all four country diagnostics">4개국 진단을 묶은 관문 사이트</small><br><span class="tag">Cowork + Code</span></div>
+      </a>
+      <a class="item" href="https://jaebong-portfolio.vercel.app/general/">
+        <img src="assets/portfolio.webp" alt="종합 포트폴리오" loading="lazy" width="1280" height="800">
+        <div class="cap"><b data-url="jaebong-portfolio.vercel.app/general" data-en="Full portfolio">종합 포트폴리오</b><small data-en="Video, web and card-news work">영상·웹·카드뉴스 전체 작업 모음</small><br><span class="tag">Vercel</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- S5 도구 스택 -->
+<section id="stack" class="stack fade">
+  <div class="wrap">
+    <h2 data-en="Tools">도구 스택</h2>
+    <p class="sec-cap" data-en="Not a developer by training, but a practitioner who wires tools into workflows.">코딩 전공이 아니라, 도구를 업무에 붙여 쓰는 실무자입니다.</p>
+    <dl>
+      <dt>AI</dt><dd data-en="Claude (web · Code · Cowork · ~20 custom skills), ChatGPT">Claude (웹 · Code · Cowork · 커스텀 스킬 약 20종 운영), ChatGPT</dd>
+      <dt data-en="Automation">자동화</dt><dd data-en="Python/Playwright (HTML→image rendering)">Python/Playwright (HTML→이미지 렌더링)</dd>
+      <dt data-en="Deploy">배포</dt><dd>GitHub · GitHub Pages · Vercel</dd>
+      <dt data-en="Ops">운영</dt><dd>Notion</dd>
+      <dt data-en="Content">콘텐츠</dt><dd>Adobe Premiere Pro · Photoshop</dd>
+    </dl>
+    <p class="way" data-en="Custom skills are automation modules written in natural language, not code. Repetitive work is fixed as skills, and every deliverable ships to a link.">커스텀 스킬은 코드가 아니라 자연어 지침으로 만든 자동화 모듈입니다. 반복 작업은 스킬로 고정해 두고, 산출물은 배포까지 완주해 링크로 남깁니다.</p>
+  </div>
+</section>
+
+<!-- S6 검증·품질 습관 -->
+<section id="quality" class="quality fade">
+  <div class="wrap">
+    <h2 data-en="Verification Habits">검증·품질 습관</h2>
+    <p class="sec-cap" data-en="AI makes the draft; a human verifies it.">AI가 만든 결과물도 검증은 사람이 합니다.</p>
+    <p data-en="In study-abroad casework I handled application and visa files, documents where a single error changes the outcome, managing each case with its own deadlines and checklists. The same standard applies to AI output. In August 2026, for example, I checked all 38 tuition entries in the UK diagnostic against official university pages and corrected a lower-bound error in the fee table.">유학 수속 실무에서 지원 서류나 비자 서류처럼 오류 하나가 결과를 바꾸는 문서를, 건별 마감 일정과 체크리스트로 관리해 왔습니다. 그 기준을 AI 산출물에도 그대로 적용합니다. 2026년 8월에는 영국 진단 사이트의 학비 정보 38건을 대학 공식 페이지와 전수 대조해 표 하한 오류를 바로잡았습니다.</p>
+    <ul>
+      <li data-en="Check figures and requirements against the original source">수치·요건은 원출처(공식 페이지)와 대조한다</li>
+      <li data-en="Double-check every number and date">숫자와 날짜는 이중으로 확인한다</li>
+      <li data-en="Done means deployed or submitted">배포·제출까지 끝내야 완료로 친다</li>
+      <li data-en="Review every item one by one before release, not a sample">샘플만 보지 않고, 발행 전 결과물을 한 건씩 끝까지 본다</li>
+    </ul>
+  </div>
+</section>
+
+<!-- S7 푸터 -->
+<footer>
+  <div class="wrap">
+    <p><a href="mailto:cjbong23@hanmail.net">cjbong23@hanmail.net</a> · <span data-en="Last updated: 2026-08-18">최종 업데이트: 2026-08-18</span> · <span data-en="All demo data on this site is fictional.">이 사이트의 데모 데이터는 전부 가상입니다.</span></p>
+  </div>
+</footer>
+
+<script>
+// 스크롤 페이드
+const els = document.querySelectorAll('.fade');
+if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  els.forEach(el => el.classList.add('in'));
+} else {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  els.forEach(el => io.observe(el));
+}
+
+// 실물 사진 라이트박스
+const lightbox = document.getElementById('lightbox');
+document.querySelector('.artifacts .zoom').addEventListener('click', () => lightbox.showModal());
+lightbox.addEventListener('click', () => lightbox.close());
+
+// 테마 (기본: 라이트)
+const btnTheme = document.getElementById('btn-theme');
+function applyTheme(t) {
+  if (t === 'dark') document.documentElement.dataset.theme = 'dark';
+  else delete document.documentElement.dataset.theme;
+  try { localStorage.setItem('pf-theme', t); } catch (e) {}
+  updateCtrlLabels();
+}
+btnTheme.addEventListener('click', () => {
+  applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+});
+
+// 언어 (기본: 한국어)
+const btnKo = document.getElementById('btn-ko');
+const btnEn = document.getElementById('btn-en');
+function applyLang(l) {
+  document.documentElement.lang = l;
+  document.querySelectorAll('[data-en]').forEach(el => {
+    if (!('ko' in el.dataset)) el.dataset.ko = el.innerHTML;
+    el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.ko;
+  });
+  btnKo.classList.toggle('active', l !== 'en');
+  btnEn.classList.toggle('active', l === 'en');
+  try { localStorage.setItem('pf-lang', l); } catch (e) {}
+  updateCtrlLabels();
+}
+btnKo.addEventListener('click', () => applyLang('ko'));
+btnEn.addEventListener('click', () => applyLang('en'));
+
+function updateCtrlLabels() {
+  const en = document.documentElement.lang === 'en';
+  const dark = document.documentElement.dataset.theme === 'dark';
+  btnTheme.textContent = en ? (dark ? 'Light' : 'Dark') : (dark ? '라이트' : '다크');
+}
+
+let savedLang = 'ko';
+try { savedLang = localStorage.getItem('pf-lang') || 'ko'; } catch (e) {}
+applyLang(savedLang);
+</script>
+
+</body>
+</html>
