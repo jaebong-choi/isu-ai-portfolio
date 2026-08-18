@@ -169,12 +169,12 @@ header.top nav a:hover { color: var(--point); }
 .artifacts figcaption .hint { color: var(--point-deep); font-weight: 600; }
 dialog.lightbox {
   margin: auto;
-  border: none; border-radius: 12px; padding: 10px;
-  background: var(--bg); max-width: min(92vw, 1100px);
+  border: none; border-radius: 12px; padding: 8px;
+  background: var(--bg); width: max-content; max-width: min(96vw, 1320px);
   box-shadow: var(--shadow-md);
 }
 dialog.lightbox::backdrop { background: rgba(15, 15, 30, 0.72); }
-dialog.lightbox img { max-width: 100%; max-height: 82vh; display: block; border-radius: 8px; cursor: zoom-out; }
+dialog.lightbox img { width: auto; height: auto; max-width: 100%; max-height: 90vh; display: block; border-radius: 8px; cursor: zoom-out; }
 .auto-head, .auto-row summary {
   display: grid;
   grid-template-columns: 2fr 1.6fr 1.8fr 1.1fr;
@@ -551,7 +551,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
           <button class="zoom" type="button" aria-label="사진 크게 보기">
             <img src="assets/art-ot.webp" alt="EDM유학센터 학생 출국 오리엔테이션 진행 모습" loading="lazy">
           </button>
-          <figcaption data-en="Pre-departure orientation for EDM students; I also handled in-house training (July 2023) <span class='hint'>· enlarge</span>">EDM유학센터 학생들의 출국 OT 및 사내 교육 담당 경험 (2023. 7) <span class="hint">· 크게 보기</span></figcaption>
+          <figcaption data-en="Pre-departure orientation for EDM students; I also handled in-house training <span class='hint'>· enlarge</span>">EDM유학센터 학생들의 출국 OT 및 사내 교육 담당 경험 <span class="hint">· 크게 보기</span></figcaption>
         </figure>
       </div>
       <dialog class="lightbox" id="lightbox">
