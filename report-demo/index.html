@@ -209,7 +209,7 @@ footer { border-top: 1px solid var(--line); padding: 24px 0 46px; font-size: 0.8
     <h2>동작 방식</h2>
     <ol>
       <li><b>엑셀 파싱</b><small>브라우저 안의 SheetJS로 읽습니다. 파일이 밖으로 나가지 않습니다.</small></li>
-      <li><b>규칙 계산</b><small>주간 집계와 이상치 판정은 페이지에 적힌 고정 규칙으로 계산합니다. AI 추측이 아니라 검산 가능한 산식입니다.</small></li>
+      <li><b>규칙 계산</b><small>주간 집계와 이상치 판정은 페이지에 적힌 고정 규칙으로 계산합니다. 산식이 고정이라 누구든 손으로 검산할 수 있습니다.</small></li>
       <li><b>리포트 출력</b><small>요약 타일, 라인 비교, 이상치 표, 불량 상위 유형 순서로 보여 줍니다.</small></li>
     </ol>
     <p class="sec-cap" style="margin-top:18px;">실제 현업에 붙일 때는 이 틀에 부서가 쓰는 실적 양식을 맞추면 됩니다. 요구사항을 듣고, 양식에 맞춰 고치고, 배포해서 쓰게 하는 과정까지가 제가 하는 일입니다.</p>
@@ -424,6 +424,16 @@ document.getElementById('file-input').addEventListener('change', e => {
   reader.readAsArrayBuffer(f);
   e.target.value = '';
 });
+
+// ?sample 붙여 열면 바로 리포트를 보여준다 (공유용). ?shot은 캡처용으로 히어로까지 숨긴다.
+const qp = new URLSearchParams(location.search);
+if (qp.has('sample') || qp.has('shot')) {
+  buildReport(toRecords(sampleRows()));
+  if (qp.has('shot')) {
+    document.querySelector('.hero').style.display = 'none';
+    window.scrollTo(0, 0);
+  }
+}
 
 // 집계 로직 자기 검증 (콘솔에서만)
 (function selfCheck() {
