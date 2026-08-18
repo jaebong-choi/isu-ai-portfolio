@@ -270,6 +270,23 @@ dialog.lightbox img { max-width: 100%; max-height: 82vh; display: block; border-
 .deep .visit:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .deep .visit:active { transform: scale(0.97); }
 
+/* 직무 섹션 공통 */
+.duty-lead { font-size: 0.98rem; max-width: 720px; margin-bottom: 22px; }
+.feature { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: center; margin: 8px 0; }
+.feature img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow-sm); display: block; }
+.feature .pts { font-size: 0.93rem; color: var(--ink-soft); list-style: none; }
+.feature .pts li { padding: 7px 0 7px 22px; position: relative; border-top: 1px solid var(--line); }
+.feature .pts li::before { content: ""; position: absolute; left: 2px; top: 16px; width: 7px; height: 7px; border-radius: 50%; background: var(--point); }
+.cta {
+  display: inline-block; margin-top: 14px;
+  background: var(--point); color: #fff; text-decoration: none;
+  padding: 11px 22px; border-radius: 999px; font-size: 0.93rem; font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.cta:active { transform: scale(0.97); }
+
 /* S4 갤러리 */
 .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .gallery .item {
@@ -346,6 +363,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
   .auto-row .save { text-align: left; }
   .auto-row .detail { padding: 4px 16px 18px; }
   .map-grid { grid-template-columns: 1fr; }
+  .feature { grid-template-columns: 1fr; gap: 14px; }
   .mobile-label {
     display: inline-block; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft);
     text-transform: uppercase; letter-spacing: 0.04em; margin-right: 6px;
@@ -383,6 +401,13 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
   .hero .links a::after { content: " — " attr(data-url); color: #555; }
   .hero .links a + a::before { content: " · "; }
   .deep .visit { font-weight: 700; }
+  .feature { display: block; }
+  .feature img { display: none; }
+  .cta {
+    display: inline; padding: 0; border: 0; background: none; box-shadow: none;
+    color: var(--ink); font-weight: 700; font-size: 10px;
+  }
+  .cta::after { content: " — " attr(data-url); font-weight: 400; color: #555; font-size: 9px; }
   .auto-row .detail { display: none; }
   .auto-row summary::after { display: none; }
   .auto-row summary { padding-right: 8px; }
@@ -448,10 +473,10 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
     </div>
     <div class="top-right">
       <nav>
-        <a href="#auto" data-en="Automation">자동화 실적</a>
-        <a href="#deep" data-en="Case Study">대표 사례</a>
+        <a href="#coach" data-en="① Coaching">① 코칭</a>
+        <a href="#build" data-en="② Building">② 기능 개발</a>
+        <a href="#manage" data-en="③ Ops">③ 활용·관리</a>
         <a href="#gallery" data-en="Work">제작물</a>
-        <a href="#stack" data-en="Tools">도구</a>
       </nav>
       <div class="ctrl">
         <span class="lang-seg">
@@ -472,7 +497,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
       <span data-en="Ran in-house AI training">사내 AI 활용 교육 진행</span>
       <span data-en="5 sites shipped">사이트 5종 배포 완주</span>
       <span data-en="~20 custom skills in operation">커스텀 스킬 약 20종 운영</span>
-      <span data-en="~2 hours saved per blog post">블로그 편당 약 2시간 절감</span>
     </div>
     <p class="meta-proof" data-en="This page itself was built and deployed with Claude Code. <a href='https://github.com/jaebong-choi/isu-ai-portfolio' data-url='github.com/jaebong-choi/isu-ai-portfolio'>Build-process repo</a>">
       이 페이지 자체도 Claude Code로 제작·배포되었습니다.
@@ -490,145 +514,80 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
   <div class="wrap">
     <h2 data-en="How this maps to the three duties in the posting">공고의 세 가지 직무에 이렇게 연결됩니다</h2>
     <div class="map-grid">
-      <a href="prompt-guide/">
+      <a href="#coach">
         <b data-en="① In-house AI support &amp; prompt coaching">① 사내 AI 지원·프롬프트 코칭</b>
-        <small data-en="Ran real in-house training + per-role guide">사내 교육 진행 경험 + 직군별 가이드</small>
-        <span class="arrow" data-en="Guide →">가이드 →</span>
+        <small data-en="Ran real in-house training + per-role guide">사내 교육 진행 기록 + 직군별 가이드</small>
+        <span class="arrow" data-en="Evidence →">근거 →</span>
       </a>
-      <a href="report-demo/">
-        <b data-en="② AI features from team needs">② 현업 요구 기반 AI 기능 개발</b>
+      <a href="#build">
+        <b data-en="② AI features from team needs">② 현업 요구사항 기반 AI 기능 개발</b>
         <small data-en="Excel upload → weekly report demo">공정 실적 엑셀 → 주간 리포트 데모</small>
-        <span class="arrow" data-en="Demo →">데모 →</span>
+        <span class="arrow" data-en="Evidence →">근거 →</span>
       </a>
-      <a href="#auto">
+      <a href="#manage">
         <b data-en="③ AI adoption &amp; management">③ AI 활용 및 관리</b>
-        <small data-en="Measured savings + verification habits">실측 절감 실적과 검증 습관</small>
-        <span class="arrow" data-en="Track record →">실적 표 →</span>
+        <small data-en="Measured records, verification, boundaries">실측 기록과 검증·보안 경계</small>
+        <span class="arrow" data-en="Evidence →">근거 →</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- S2 자동화 실적 -->
-<section id="auto" class="fade">
+<!-- ① 사내 AI 지원·프롬프트 코칭 -->
+<section id="coach" class="fade">
   <div class="wrap">
-    <h2 data-en="Automation Track Record">자동화 실적</h2>
-    <p class="sec-cap" data-en="Built on the job at a study-abroad company. Click a row to see how each output was verified.">유학 기업 재직 중 실무로 만든 자동화입니다. 행을 누르면 검증 방법이 열립니다.</p>
-
-    <div class="auto-card">
-      <div class="auto-head" aria-hidden="true">
-        <span data-en="Target">자동화 대상</span><span data-en="Tools">사용 도구</span><span>Before → After</span><span data-en="Impact">절감 효과</span>
+    <h2 data-en="① In-house AI Support &amp; Prompt Coaching">① 사내 AI 지원·프롬프트 코칭</h2>
+    <p class="sec-cap" data-en="Records of having done it, not claims of being able to.">"할 수 있다"가 아니라 "해 봤다"는 기록입니다.</p>
+    <p class="duty-lead" data-en="While at Chongro Overseas Educational Institute I built and ran an AI training for the consulting staff myself: task-by-task use cases, live demos, and a final section on security rules such as pseudonymizing personal data and never uploading internal documents. My day job was walking students and parents through complicated procedures, so explaining tools at a non-developer's eye level is familiar ground.">종로유학원 재직 중 매니저들을 상대로 AI 활용 교육을 직접 만들어 진행했습니다. 상담 업무별 활용법과 시연으로 구성했고, 마지막 장은 개인정보 가명 처리, 내부 자료 업로드 금지 같은 보안 수칙이었습니다. 본업부터가 학생과 학부모에게 복잡한 절차를 풀어 설명하는 일이라, 비개발자 눈높이로 말하는 데 익숙합니다.</p>
+    <div class="artifacts">
+      <div class="art-row">
+        <figure>
+          <a href="https://docs.google.com/presentation/d/1kzb4b0lfqMNHAcFV7pqb5UtSAmpLjGAg9_O7tzLY-6s/preview" target="_blank" rel="noopener">
+            <img src="assets/art-training.webp" alt="종로유학원 매니저 대상 AI 활용 교육 자료 표지" loading="lazy">
+          </a>
+          <figcaption data-en="Slides from the in-house AI training I ran <span class='hint'>· open ↗</span>">직접 진행한 사내 AI 활용 교육 자료 <span class="hint">· 열어 보기 ↗</span></figcaption>
+        </figure>
+        <figure>
+          <button class="zoom" type="button" aria-label="사진 크게 보기">
+            <img src="assets/art-ot.webp" alt="출국 전 오리엔테이션 진행 모습" loading="lazy">
+          </button>
+          <figcaption data-en="Running a group briefing (July 2023) <span class='hint'>· enlarge</span>">단체 안내를 진행하던 모습 (2023. 7) <span class="hint">· 크게 보기</span></figcaption>
+        </figure>
       </div>
-
-      <details class="auto-row">
-        <summary>
-          <span class="subject" data-en="Instagram card-news sets (1080×1350)">인스타 카드뉴스(1080×1350) 세트 제작</span>
-          <span class="tools" data-en="Claude skill + Python/Playwright (HTML→PNG rendering)">Claude 스킬 + Python/Playwright (HTML→PNG 렌더링)</span>
-          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>Manual 3-4 h → <span class='after'>1 h</span>"><span class="mobile-label">Before → After</span>수작업 3~4시간 → <span class="after">1시간</span></span>
-          <span class="save" data-en="<span class='mobile-label'>Saved</span>2-3 h per set"><span class="mobile-label">절감</span>세트당 2~3시간</span>
-        </summary>
-        <p class="detail" data-en="<b>Verification:</b> every number and date is checked against the source, and every rendered card is reviewed before publishing. The workflow is fixed as a skill. Brand colors and layout rules live in the skill, and pages are typeset in HTML and rendered with Playwright."><b>검증:</b> 발행 전에 수치와 날짜를 원문과 대조하고 렌더링 결과를 전수 확인합니다. 비자·정책 뉴스를 카드뉴스로 만드는 작업은 스킬로 고정해 두었습니다. 브랜드 색과 레이아웃 규칙을 스킬에 담아 HTML로 조판한 뒤 Playwright로 렌더링합니다.</p>
-      </details>
-
-      <details class="auto-row">
-        <summary>
-          <span class="subject" data-en="Country study-guide sites: data build &amp; deployment">국가별 유학 안내 사이트 데이터 구축·배포</span>
-          <span class="tools" data-en="Claude Cowork (research &amp; cross-check) + Claude Code (build)">Claude Cowork (조사·교차검증) + Claude Code (구현)</span>
-          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>Manual ~3 days → <span class='after'>4-5 h</span>"><span class="mobile-label">Before → After</span>수작업 3일 → <span class="after">4~5시간</span></span>
-          <span class="save" data-en="<span class='mobile-label'>Saved</span>5 sites shipped"><span class="mobile-label">절감</span>사이트 5종 배포 완주</span>
-        </summary>
-        <p class="detail" data-en="<b>Verification:</b> collected admission and tuition data was checked against each university's official pages before going live. Researched with Cowork, built with Claude Code, deployed on GitHub Pages. Five sites in total: US, UK, Australia, Canada, and the hub."><b>검증:</b> 수집한 진학 요건과 학비 데이터를 각 대학 공식 페이지와 대조해 확인한 뒤 반영했습니다. Cowork로 조사하고 Claude Code로 구현해 GitHub Pages에 배포했습니다. 미국, 영국, 호주, 캐나다 진단 사이트에 허브까지 5종입니다.</p>
-      </details>
-
-      <details class="auto-row">
-        <summary>
-          <span class="subject" data-en="Naver blog articles (review included)">네이버 블로그 원고 생산 (검수 포함)</span>
-          <span class="tools" data-en="Claude skill (SEO structure + style review)">Claude 스킬 (SEO 구조화 + 문체 검수)</span>
-          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>2-3 h → <span class='after'>30 min</span> per post"><span class="mobile-label">Before → After</span>편당 2~3시간 → <span class="after">30분</span></span>
-          <span class="save" data-en="<span class='mobile-label'>Saved</span>~2 h per post"><span class="mobile-label">절감</span>편당 약 2시간</span>
-        </summary>
-        <p class="detail" data-en="<b>Verification:</b> quoted figures are confirmed on the source page, and drafts pass a review step that removes AI-sounding patterns before publishing. Naver SEO structure and style rules are packaged as a skill that produces the first draft."><b>검증:</b> 인용하는 수치는 출처 페이지에서 직접 확인하고, AI 문형을 걸러내는 검수 단계를 거쳐 발행합니다. 네이버 SEO 구조와 문체 규칙을 스킬로 만들어 초안을 뽑습니다.</p>
-      </details>
-
-      <details class="auto-row">
-        <summary>
-          <span class="subject" data-en="9:16 data graphics for Shorts">쇼츠용 9:16 데이터 그래픽 제작</span>
-          <span class="tools" data-en="Claude skill + Playwright rendering">Claude 스킬 + Playwright 렌더링</span>
-          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>2-3 h → <span class='after'>30 min</span> per cut"><span class="mobile-label">Before → After</span>컷당 2~3시간 → <span class="after">30분</span></span>
-          <span class="save" data-en="<span class='mobile-label'>Saved</span>~2 h per cut"><span class="mobile-label">절감</span>컷당 약 2시간</span>
-        </summary>
-        <p class="detail" data-en="<b>Verification:</b> figures are checked against the script's sources before rendering. Screen directions in a Shorts script become tables, charts and timeline cards (1080×1920), with narrative facts restructured as data graphics."><b>검증:</b> 수치는 대본의 출처와 대조한 뒤 렌더링합니다. 쇼츠 대본의 화면 지시를 표와 그래프, 타임라인 카드(1080×1920)로 바꾸면서 서술형 정보를 데이터 그래픽으로 재구성합니다.</p>
-      </details>
-
-      <details class="auto-row">
-        <summary>
-          <span class="subject" data-en="Pre-departure orientation briefings">출국 전 오리엔테이션 반복 안내</span>
-          <span class="tools" data-en="Notion system (UK · Canada · Australia)">Notion 시스템 (영국·캐나다·호주 3개국)</span>
-          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>1 h per case → <span class='after'>self-serve</span>"><span class="mobile-label">Before → After</span>구두 안내 1시간/건 → <span class="after">셀프 안내</span></span>
-          <span class="save" data-en="<span class='mobile-label'>Saved</span>40 min per case"><span class="mobile-label">절감</span>건당 40분</span>
-        </summary>
-        <p class="detail" data-en="<b>Verification:</b> students read the guide themselves and consultations cover only open questions, about 20 minutes per case. A briefing once repeated verbally for an hour is standardized as a per-country Notion document system, built without code, so nothing gets left out."><b>검증:</b> 학생이 스스로 읽고 확인 사항만 상담으로 남겨, 건당 확인 시간은 20분 수준으로 줄었습니다. 상담원이 매번 1시간씩 구두로 반복하던 출국 전 안내를 국가별 Notion 문서 체계로 코드 없이 표준화해, 안내 누락을 구조적으로 방지합니다.</p>
-      </details>
-
-      <details class="auto-row demo">
-        <summary>
-          <span class="subject"><span data-en="Production report generator (demo)">공정 실적 자동 리포트 (데모)</span><br><a class="demo-link" href="report-demo/" data-url="jaebong-choi.github.io/isu-ai-portfolio/report-demo" data-en="Demo page →">데모 페이지 →</a></span>
-          <span class="tools" data-en="Web demo (Excel parsing in the browser)">웹 데모 (브라우저에서 엑셀 파싱)</span>
-          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>Manual weekly summary → <span class='after'>auto report</span>"><span class="mobile-label">Before → After</span>수작업 주간 집계 → <span class="after">자동 리포트</span></span>
-          <span class="save" data-en="<span class='mobile-label'>Saved</span>Fictional 2-week sample → 1 report"><span class="mobile-label">절감</span>가상 2주치 실적 → 리포트 1건</span>
-        </summary>
-        <p class="detail" data-en="<b>Verification:</b> the anomaly rule is printed on the page so anyone can recheck a flagged cell by hand. Upload a fictional production spreadsheet (daily output, yield and defect types per line) and the page builds a weekly summary with anomalies highlighted. All sample data is fictional."><b>검증:</b> 이상치 판정 기준을 페이지에 그대로 적어 두어, 표시된 값은 누구든 손으로 재검산할 수 있습니다. 가상의 공정 실적 엑셀(라인별 생산량·수율·불량 유형)을 올리면 주간 요약과 이상치 하이라이트를 만들어 주는 데모입니다. 샘플 데이터는 전부 가상입니다.</p>
-      </details>
+      <dialog class="lightbox" id="lightbox">
+        <img src="assets/art-ot.webp" alt="출국 전 오리엔테이션 진행 모습 (크게 보기)">
+      </dialog>
     </div>
+    <p class="duty-lead" style="margin-top:22px;" data-en="That training became a document: a per-role prompt guide for production management, quality and office support. Nine bad-vs-good example cards, plus the security rules (substitute real values with [Company A], [00%]) on the same page. It could go out as a first internal release as is.">그 교육을 문서로 옮긴 것이 직군별 프롬프트 가이드입니다. 생산관리, 품질, 사무지원 세 직군의 나쁜 예와 좋은 예 카드 9장에, 실제 값을 [A사], [00%]로 치환해 쓰는 보안 수칙까지 한 페이지에 담았습니다. 입사 후 첫 사내 배포물로 그대로 쓸 수 있는 형태입니다.</p>
+    <a class="cta" href="prompt-guide/" data-url="jaebong-choi.github.io/isu-ai-portfolio/prompt-guide" data-en="Open the prompt coaching guide">프롬프트 코칭 가이드 열기</a>
   </div>
 </section>
 
-<!-- 실물 산출물 -->
-<section id="artifacts" class="artifacts fade">
+<!-- ② 현업 요구사항 기반 AI 기능 개발 -->
+<section id="build" class="deep fade">
   <div class="wrap">
-    <h2 data-en="Real Artifacts">실물 산출물</h2>
-    <p class="sec-cap" data-en="Deliverables and work logs from the job.">실무에서 실제로 쓰던 시스템과 작업 기록입니다.</p>
-    <div class="art-row">
-      <figure>
-        <a href="https://docs.google.com/presentation/d/1kzb4b0lfqMNHAcFV7pqb5UtSAmpLjGAg9_O7tzLY-6s/preview" target="_blank" rel="noopener">
-          <img src="assets/art-training.webp" alt="종로유학원 매니저 대상 AI 활용 교육 자료 표지" loading="lazy">
-        </a>
-        <figcaption data-en="Slides from an in-house AI training I ran for consultants <span class='hint'>· open ↗</span>">직원 대상 AI 활용 교육을 직접 진행한 자료 <span class="hint">· 열어 보기 ↗</span></figcaption>
-      </figure>
-      <figure>
-        <button class="zoom" type="button" aria-label="사진 크게 보기">
-          <img src="assets/art-ot.webp" alt="출국 전 오리엔테이션 진행 모습" loading="lazy">
-        </button>
-        <figcaption data-en="Running a pre-departure orientation (July 2023) <span class='hint'>· enlarge</span>">출국 전 오리엔테이션을 진행하던 모습 (2023. 7) <span class="hint">· 크게 보기</span></figcaption>
-      </figure>
-      <figure>
-        <a href="https://app.notion.com/p/OT-3869ef3ab7188119a79fca3e848b5e7d" target="_blank" rel="noopener">
-          <img src="assets/art-notion.webp" alt="국가별 출국 OT Notion 시스템" loading="lazy">
-        </a>
-        <figcaption data-en="Per-country pre-departure OT system in Notion <span class='hint'>· open ↗</span>">국가별 출국 OT Notion 시스템 (캐나다 폴더) <span class="hint">· 열어 보기 ↗</span></figcaption>
-      </figure>
-      <figure>
-        <a href="https://github.com/jaebong-choi/uk-study-guide/commits/main/" target="_blank" rel="noopener">
-          <img src="assets/art-commits.webp" alt="영국 진단 사이트의 git 작업 기록" loading="lazy">
-        </a>
-        <figcaption data-en="Work log of the UK diagnostic site (git commits) <span class='hint'>· open ↗</span>">영국 진단 사이트의 작업 기록 (git 커밋) <span class="hint">· 열어 보기 ↗</span></figcaption>
-      </figure>
-    </div>
-    <dialog class="lightbox" id="lightbox">
-      <img src="assets/art-ot.webp" alt="출국 전 오리엔테이션 진행 모습 (크게 보기)">
-    </dialog>
-  </div>
-</section>
+    <h2 data-en="② AI Features Built from Team Needs">② 현업 요구사항 기반 AI 기능 개발</h2>
+    <p class="sec-cap" data-en="Instead of waiting for requirements, I built a prototype from the work described in this very posting.">요구사항을 기다리는 대신, 이 공고에서 읽히는 업무로 시제품을 먼저 만들었습니다.</p>
 
-<!-- S3 대표 사례 딥다이브 -->
-<section id="deep" class="deep fade">
-  <div class="wrap">
-    <h2 data-en="Case Study: UK University Data, from Research to Launch">대표 사례: 영국 대학 진학 데이터, 조사에서 배포까지</h2>
-    <p class="sec-cap" data-en="One project end to end. The steps are the point.">한 건을 처음부터 끝까지. 어떤 단계로 완주했는지가 이 사례의 핵심입니다.</p>
+    <div class="feature">
+      <a href="report-demo/"><img src="assets/report-demo.webp" alt="공정 실적 자동 리포트 데모 화면" loading="lazy" width="1280" height="800"></a>
+      <div>
+        <p class="duty-lead" style="margin-bottom:4px;" data-en="The production planning role in the same posting handles production records and data analysis. Assuming that workload, I built a page: upload a spreadsheet of line output and yield, and it returns a weekly summary with anomalies highlighted.">같은 공고의 생산기획 직무에 공정 실적 관리와 데이터 분석 업무가 있습니다. 그 업무를 가정하고, 라인별 실적 엑셀을 올리면 주간 요약과 이상치 하이라이트가 나오는 리포트를 만들었습니다.</p>
+        <ul class="pts">
+          <li data-en="The anomaly rule is printed on the page, so a flagged cell can be rechecked by hand">이상치 판정 기준을 페이지에 그대로 적어, 표시된 값은 손으로 재검산할 수 있습니다</li>
+          <li data-en="Files never leave the browser; nothing is sent to any server">업로드한 파일은 서버로 가지 않고 브라우저 안에서만 처리됩니다</li>
+          <li data-en="All sample data is fictional">샘플 데이터는 전부 가상입니다</li>
+        </ul>
+        <a class="cta" href="report-demo/" data-url="jaebong-choi.github.io/isu-ai-portfolio/report-demo" data-en="Open the report demo">리포트 데모 열기</a>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.05rem; letter-spacing:-0.01em; margin:44px 0 4px;" data-en="Shipped in the same order: research → verify → build → deploy">같은 순서로 완주한 기록: 조사 → 검증 → 구현 → 배포</h3>
+    <p class="sec-cap" data-en="Requirements work is half sequencing. Five sites shipped this way; the largest one below.">부서 요구를 받아 기능을 만드는 일은 순서가 절반입니다. 이 순서로 사이트 5종을 완주했고, 아래는 그중 가장 큰 건입니다.</p>
 
     <ol class="steps">
       <li><b data-en="Scope">범위 정의</b><small data-en="47 UK universities, including 16 in the QS world top 100">QS 세계 100위 이내 16개교를 포함한 영국 대학 47개교</small></li>
-      <li><b data-en="Research with Claude Cowork">Claude Cowork로 조사</b><small data-en="Undergraduate pathways (foundation · IYO), majors, requirements">학부 진학 경로(파운데이션·IYO)·전공·요건 데이터 수집</small></li>
+      <li><b data-en="Research with Claude Cowork">Claude Cowork로 조사</b><small data-en="Pathways, majors, requirements">진학 경로·전공·요건 데이터 수집</small></li>
       <li><b data-en="Cross-verification">교차 검증</b><small data-en="Figures and requirements checked against each university's official pages">각 대학 공식 페이지와 대조해 수치·요건 확인</small></li>
       <li><b data-en="Data structuring">데이터 구조화</b><small data-en="Organized into a site-ready schema">사이트에서 쓸 수 있는 스키마로 정리</small></li>
       <li><b data-en="Built with Claude Code">Claude Code로 구현</b><small data-en="Single-page diagnostic site">단일 페이지 진단 사이트로 개발</small></li>
@@ -642,9 +601,91 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
     </div>
 
     <p class="bridge" data-en="Take a requirement, research it, verify against the source, build and ship. Developing AI features from team needs runs in the same order.">요구사항을 받아 조사하고, 원문과 대조해 바로잡고, 구현해 배포까지 마쳤습니다. 현업 요구를 받아 AI 기능을 만드는 일과 같은 순서입니다.</p>
-
     <p class="deep-links"><a class="visit" href="https://jaebong-choi.github.io/uk-study-guide/" data-url="jaebong-choi.github.io/uk-study-guide" data-en="Open the live site">배포된 사이트 열기</a></p>
-    <img class="deep-shot" src="assets/uk.webp" alt="영국 대학 진학 안내 사이트 화면" loading="lazy" width="1280" height="800">
+
+    <div class="artifacts">
+      <div class="art-row">
+        <figure>
+          <a href="https://app.notion.com/p/OT-3869ef3ab7188119a79fca3e848b5e7d" target="_blank" rel="noopener">
+            <img src="assets/art-notion.webp" alt="국가별 출국 OT Notion 시스템" loading="lazy">
+          </a>
+          <figcaption data-en="Solved without code: repeated briefings standardized as a Notion system <span class='hint'>· open ↗</span>">코드 없이 해결한 사례도 있습니다. 반복 안내를 Notion 체계로 표준화 <span class="hint">· 열어 보기 ↗</span></figcaption>
+        </figure>
+        <figure>
+          <a href="https://github.com/jaebong-choi/uk-study-guide/commits/main/" target="_blank" rel="noopener">
+            <img src="assets/art-commits.webp" alt="영국 진단 사이트의 git 작업 기록" loading="lazy">
+          </a>
+          <figcaption data-en="The work log is public (git commits) <span class='hint'>· open ↗</span>">작업 기록도 공개되어 있습니다 (git 커밋) <span class="hint">· 열어 보기 ↗</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ AI 활용 및 관리 -->
+<section id="manage" class="fade">
+  <div class="wrap">
+    <h2 data-en="③ AI Adoption &amp; Management">③ AI 활용 및 관리</h2>
+    <p class="sec-cap" data-en="Adoption recorded in measured numbers, verified by a human, with boundaries that keep data in.">퍼뜨린 만큼 실측으로 기록하고, 사람이 검증하고, 새면 안 되는 경계를 긋습니다.</p>
+
+    <div class="auto-card">
+      <div class="auto-head" aria-hidden="true">
+        <span data-en="Target">자동화 대상</span><span data-en="Tools">사용 도구</span><span>Before → After</span><span data-en="Impact">절감 효과</span>
+      </div>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="Content production standardized as skills">콘텐츠 제작 표준화 (카드뉴스·블로그·쇼츠)</span>
+          <span class="tools" data-en="3 Claude skills + Playwright rendering">Claude 스킬 3종 + Playwright 렌더링</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>2-4 h → <span class='after'>30-60 min</span> per item"><span class="mobile-label">Before → After</span>건당 2~4시간 → <span class="after">30분~1시간</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Impact</span>Same quality, any operator"><span class="mobile-label">절감</span>누가 해도 같은 품질</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> figures and dates are checked against the source before publishing, and drafts pass a step that removes AI-sounding patterns. Card news, blog posts and Shorts graphics each run on a fixed skill, so the workflow itself is documented and transferable."><b>검증:</b> 발행 전에 수치와 날짜를 원문과 대조하고, AI 문형을 걸러내는 검수 단계를 거칩니다. 카드뉴스, 블로그, 쇼츠 그래픽을 각각 스킬로 고정해 두어 작업 방식 자체가 문서로 남고, 인수인계가 됩니다.</p>
+      </details>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="Country study-guide sites: data build &amp; deployment">국가별 안내 사이트 데이터 구축·배포</span>
+          <span class="tools" data-en="Claude Cowork (research &amp; cross-check) + Claude Code (build)">Claude Cowork (조사·교차검증) + Claude Code (구현)</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>Manual ~3 days → <span class='after'>4-5 h</span>"><span class="mobile-label">Before → After</span>수작업 3일 → <span class="after">4~5시간</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>5 sites shipped"><span class="mobile-label">절감</span>사이트 5종 배포 완주</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> collected data was checked against each university's official pages before going live. Researched with Cowork, built with Claude Code, deployed on GitHub Pages. Five sites in total."><b>검증:</b> 수집한 데이터를 각 대학 공식 페이지와 대조해 확인한 뒤 반영했습니다. Cowork로 조사하고 Claude Code로 구현해 GitHub Pages에 배포했습니다. 허브까지 5종입니다.</p>
+      </details>
+
+      <details class="auto-row">
+        <summary>
+          <span class="subject" data-en="Repeated briefings">반복 안내 셀프서비스화</span>
+          <span class="tools" data-en="Notion system (3 countries)">Notion 시스템 (3개국)</span>
+          <span class="shift" data-en="<span class='mobile-label'>Before → After</span>1 h per case → <span class='after'>self-serve</span>"><span class="mobile-label">Before → After</span>구두 안내 1시간/건 → <span class="after">셀프 안내</span></span>
+          <span class="save" data-en="<span class='mobile-label'>Saved</span>40 min per case"><span class="mobile-label">절감</span>건당 40분</span>
+        </summary>
+        <p class="detail" data-en="<b>Verification:</b> readers self-serve and consultations cover only open questions, about 20 minutes per case. An hour-long verbal briefing became a per-country Notion document system, built without code, so nothing gets left out."><b>검증:</b> 읽는 사람이 스스로 확인하고 질문만 상담으로 남겨, 건당 확인 시간은 20분 수준으로 줄었습니다. 매번 1시간씩 구두로 반복하던 안내를 국가별 Notion 문서 체계로 코드 없이 표준화해, 안내 누락을 구조적으로 방지합니다.</p>
+      </details>
+    </div>
+
+    <p class="way" data-en="Custom skills are automation modules written in natural language, not code. I run about 20 of them to pin down repetitive work. Once a task lives in a skill, quality stays the same whoever runs it. The same method transfers directly to standardizing and managing AI use inside a company.">커스텀 스킬은 코드가 아니라 자연어 지침으로 만든 자동화 모듈입니다. 이런 스킬을 약 20종 운영하며 반복 업무를 고정해 두었습니다. 작업이 스킬로 남으면 담당자가 바뀌어도 같은 품질이 나옵니다. 사내 AI 활용을 표준화하고 관리하는 일에 그대로 옮겨 쓸 수 있는 방식입니다.</p>
+
+    <div class="quality" style="margin-top:30px;">
+      <p class="duty-lead" data-en="Verification stays with a human. In study-abroad casework I handled documents where a single error changes the outcome, managing each case with deadlines and checklists, and I apply the same standard to AI output. In August 2026 I checked all 38 tuition entries on a live site against official university pages and corrected an error in the fee table.">검증은 사람이 합니다. 오류 하나가 결과를 바꾸는 서류를 건별 마감과 체크리스트로 관리해 온 기준을 AI 산출물에도 그대로 적용합니다. 2026년 8월에는 운영 중인 사이트의 학비 정보 38건을 대학 공식 페이지와 전수 대조해 표 오류를 바로잡았습니다.</p>
+      <ul>
+        <li data-en="Check figures and requirements against the original source">수치·요건은 원출처(공식 페이지)와 대조한다</li>
+        <li data-en="Double-check every number and date">숫자와 날짜는 이중으로 확인한다</li>
+        <li data-en="Done means deployed or submitted">배포·제출까지 끝내야 완료로 친다</li>
+        <li data-en="Review every item one by one before release, not a sample">샘플만 보지 않고, 발행 전 결과물을 한 건씩 끝까지 본다</li>
+      </ul>
+    </div>
+
+    <p class="duty-lead" style="margin-top:26px;" data-en="Widening use means drawing boundaries at the same time. Substituting real values, using approved accounts only, never uploading internal documents: the rules are written out in the <a href='prompt-guide/#security'>security section of the guide</a>.">넓히는 만큼 경계도 같이 긋습니다. 실제 값 치환, 승인 계정만 사용, 내부 자료 업로드 금지 같은 수칙은 <a href="prompt-guide/#security">가이드의 보안 수칙 절</a>에 정리해 두었습니다.</p>
+  </div>
+</section>
+
+<!-- 왜 이수페타시스인가 -->
+<section id="why" class="deep fade">
+  <div class="wrap">
+    <h2 data-en="Why ISU PETASYS">왜 이수페타시스인가</h2>
+    <p class="duty-lead" data-en="ISU PETASYS makes ultra high layer PCBs for AI accelerators, servers and network equipment. Revenue passed one trillion won in 2025, and new plant investments keep landing in Dalseong. When a company grows this fast, new people, new procedures and repetitive work grow with it. That is exactly when someone is needed to spread AI in the language of the shop floor and manage it without leaks, which is why I applied.">이수페타시스는 AI 가속기와 서버, 네트워크 장비에 들어가는 초고다층 PCB를 만드는 회사입니다. 2025년 매출이 1조 원을 넘었고, 달성군에 새 공장 투자가 이어지고 있습니다. 회사가 이렇게 클 때는 새 사람과 새 절차, 반복 업무가 같이 늘어납니다. AI를 현장 언어로 퍼뜨리고 새는 곳 없이 관리하는 사무 인력이 필요해지는 시점이라고 판단해 지원했습니다.</p>
+    <p class="duty-lead" data-en="I worked at Chongro's Daegu branch, so commuting to the Nongong site in Dalseong is realistic. The three duties in this posting are things I have already done, as laid out above, and I have taught myself every tool I needed. In the company's own words, I am closer to the 'growing Isu-in'.">종로유학원 대구지사에서 일해 와서 달성군 논공 사업장 출퇴근이 현실적입니다. 공고의 세 직무는 위에 정리한 대로 처음 해 보는 일이 아니라 이미 해 본 일이고, 필요한 도구는 스스로 익혀 왔습니다. 회사 인재상의 표현을 빌리면 '성장하는 이수인'에 가깝습니다.</p>
   </div>
 </section>
 
@@ -702,22 +743,6 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
       <dt data-en="Ops">운영</dt><dd>Notion</dd>
       <dt data-en="Content">콘텐츠</dt><dd>Adobe Premiere Pro · Photoshop</dd>
     </dl>
-    <p class="way" data-en="Custom skills are automation modules written in natural language, not code. Repetitive work is fixed as skills, and every deliverable ships to a link.">커스텀 스킬은 코드가 아니라 자연어 지침으로 만든 자동화 모듈입니다. 반복 작업은 스킬로 고정해 두고, 산출물은 배포까지 완주해 링크로 남깁니다.</p>
-  </div>
-</section>
-
-<!-- S6 검증·품질 습관 -->
-<section id="quality" class="quality fade">
-  <div class="wrap">
-    <h2 data-en="Verification Habits">검증·품질 습관</h2>
-    <p class="sec-cap" data-en="AI makes the draft; a human verifies it.">AI가 만든 결과물도 검증은 사람이 합니다.</p>
-    <p data-en="In study-abroad casework I handled application and visa files, documents where a single error changes the outcome, managing each case with its own deadlines and checklists. The same standard applies to AI output. In August 2026, for example, I checked all 38 tuition entries in the UK diagnostic against official university pages and corrected a lower-bound error in the fee table.">유학 수속 실무에서 지원 서류나 비자 서류처럼 오류 하나가 결과를 바꾸는 문서를, 건별 마감 일정과 체크리스트로 관리해 왔습니다. 그 기준을 AI 산출물에도 그대로 적용합니다. 2026년 8월에는 영국 진단 사이트의 학비 정보 38건을 대학 공식 페이지와 전수 대조해 표 하한 오류를 바로잡았습니다.</p>
-    <ul>
-      <li data-en="Check figures and requirements against the original source">수치·요건은 원출처(공식 페이지)와 대조한다</li>
-      <li data-en="Double-check every number and date">숫자와 날짜는 이중으로 확인한다</li>
-      <li data-en="Done means deployed or submitted">배포·제출까지 끝내야 완료로 친다</li>
-      <li data-en="Review every item one by one before release, not a sample">샘플만 보지 않고, 발행 전 결과물을 한 건씩 끝까지 본다</li>
-    </ul>
   </div>
 </section>
 
@@ -738,6 +763,7 @@ if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.08 });
   els.forEach(el => io.observe(el));
+  setTimeout(() => els.forEach(el => el.classList.add('in')), 1500); // 옵저버가 못 돌아도 내용은 보이게
 }
 
 // 실물 사진 라이트박스
