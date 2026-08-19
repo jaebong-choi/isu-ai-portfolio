@@ -9,32 +9,36 @@
 <script>try{if(localStorage.getItem('pf-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <style>
 :root {
-  --ink: #1d1d29;
-  --ink-soft: #5a5a72;
-  --line: #e7e7f0;
+  --ink: #1d1d1f;
+  --ink-soft: #6e6e73;
+  --line: #d2d2d7;
   --bg: #ffffff;
-  --bg-soft: #f7f7fc;
-  --point: #6d5ae6;
-  --point-deep: #5747c9;
-  --point-soft: #efedfc;
+  --bg-soft: #f5f5f7;
+  --point: #1d1d1f;
+  --point-deep: #000000;
+  --point-ink: #ffffff;
+  --hairline: rgba(0, 0, 0, 0.16);
+  --point-soft: #ebebed;
   --warn: #9a6b00;
   --warn-soft: #fdf3d8;
-  --glass: rgba(255, 255, 255, 0.65);
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-sm: 0 1px 2px rgba(29, 29, 60, 0.05), 0 4px 14px rgba(29, 29, 60, 0.05);
+  --glass: rgba(255, 255, 255, 0.72);
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.04);
 }
 :root[data-theme="dark"] {
-  --ink: #e9e9f4;
-  --ink-soft: #a4a4c0;
-  --line: #2b2b3e;
-  --bg: #131320;
-  --bg-soft: #1a1a2a;
-  --point: #8b7cf0;
-  --point-deep: #a89bf5;
-  --point-soft: rgba(139, 124, 240, 0.16);
+  --ink: #f5f5f7;
+  --ink-soft: #a1a1a6;
+  --line: #38383c;
+  --bg: #000000;
+  --bg-soft: #1c1c1e;
+  --point: #f5f5f7;
+  --point-deep: #ffffff;
+  --point-ink: #000000;
+  --hairline: rgba(255, 255, 255, 0.22);
+  --point-soft: rgba(255, 255, 255, 0.12);
   --warn: #ecc25c;
   --warn-soft: rgba(236, 194, 92, 0.14);
-  --glass: rgba(19, 19, 32, 0.65);
+  --glass: rgba(0, 0, 0, 0.72);
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -57,7 +61,7 @@ header.top {
   background: var(--glass);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(29, 29, 60, 0.06);
+  border-bottom: 1px solid var(--line);
   padding: 10px 0; font-size: 0.9rem;
 }
 header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -71,7 +75,7 @@ header.top .wrap { display: flex; justify-content: space-between; align-items: c
   border: 1px solid var(--line); background: var(--bg); color: var(--ink-soft);
   border-radius: 999px; padding: 4px 11px; cursor: pointer;
 }
-.ctrl button:hover { border-color: var(--point); color: var(--point); }
+.ctrl button:hover { border-color: var(--ink); color: var(--ink); }
 
 .hero { padding: 56px 0 30px; }
 .hero h1 { font-size: clamp(1.6rem, 4vw, 2.1rem); line-height: 1.25; letter-spacing: -0.02em; margin-bottom: 10px; }
