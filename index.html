@@ -9,37 +9,37 @@
 <script>try{if(localStorage.getItem('pf-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <style>
 :root {
-  --ink: #1d1d29;
-  --ink-soft: #5a5a72;
-  --line: #e7e7f0;
+  --ink: #1d1d1f;
+  --ink-soft: #6e6e73;
+  --line: #d2d2d7;
   --bg: #ffffff;
-  --bg-soft: #f7f7fc;
-  --point: #6d5ae6;       /* 포인트 1색: 바이올렛 */
-  --point-deep: #5747c9;
-  --point-soft: #efedfc;
-  --hero-wash-a: #f2f0fc;
-  --hero-wash-b: #fdf6f9;
-  --glass: rgba(255, 255, 255, 0.65);
-  --glass-soft: rgba(255, 255, 255, 0.7);
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-sm: 0 1px 2px rgba(29, 29, 60, 0.05), 0 4px 14px rgba(29, 29, 60, 0.05);
-  --shadow-md: 0 2px 6px rgba(29, 29, 60, 0.06), 0 14px 34px rgba(29, 29, 60, 0.09);
+  --bg-soft: #f5f5f7;
+  --point: #1d1d1f;        /* 강조는 색이 아니라 명도 대비로 */
+  --point-deep: #000000;
+  --point-soft: #ebebed;
+  --point-ink: #ffffff;    /* point 배경 위 글자색 */
+  --hairline: rgba(0, 0, 0, 0.16);
+  --ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 2px 10px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.06), 0 12px 30px rgba(0, 0, 0, 0.08);
+  --glass: rgba(255, 255, 255, 0.72);
+  --glass-soft: rgba(255, 255, 255, 0.8);
 }
 :root[data-theme="dark"] {
-  --ink: #e9e9f4;
-  --ink-soft: #a4a4c0;
-  --line: #2b2b3e;
-  --bg: #131320;
-  --bg-soft: #1a1a2a;
-  --point: #8b7cf0;
-  --point-deep: #a89bf5;
-  --point-soft: rgba(139, 124, 240, 0.16);
-  --hero-wash-a: rgba(109, 90, 230, 0.14);
-  --hero-wash-b: rgba(194, 56, 120, 0.08);
-  --glass: rgba(19, 19, 32, 0.65);
-  --glass-soft: rgba(26, 26, 42, 0.7);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 14px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.35), 0 14px 34px rgba(0, 0, 0, 0.3);
+  --ink: #f5f5f7;
+  --ink-soft: #a1a1a6;
+  --line: #38383c;
+  --bg: #000000;
+  --bg-soft: #1c1c1e;
+  --point: #f5f5f7;
+  --point-deep: #ffffff;
+  --point-soft: rgba(255, 255, 255, 0.12);
+  --point-ink: #000000;
+  --hairline: rgba(255, 255, 255, 0.22);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 10px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.55), 0 12px 30px rgba(0, 0, 0, 0.45);
+  --glass: rgba(0, 0, 0, 0.72);
+  --glass-soft: rgba(28, 28, 30, 0.8);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -64,7 +64,7 @@ header.top {
   background: var(--glass);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-bottom: 1px solid rgba(29, 29, 60, 0.06);
+  border-bottom: 1px solid var(--line);
   padding: 10px 0;
   font-size: 0.9rem;
 }
@@ -86,18 +86,16 @@ header.top nav a:hover { color: var(--point); }
   border-radius: 999px; padding: 4px 11px; cursor: pointer;
   transition: background 0.2s var(--ease), color 0.2s, border-color 0.2s;
 }
-.ctrl button:hover { border-color: var(--point); color: var(--point); }
-.ctrl button.active { background: var(--point); border-color: var(--point); color: #fff; }
+.ctrl button:hover { border-color: var(--ink); color: var(--ink); }
+.ctrl button.active { background: var(--point); border-color: var(--point); color: var(--point-ink); }
 .ctrl .lang-seg { display: flex; gap: 0; }
 .ctrl .lang-seg button { border-radius: 999px 0 0 999px; }
 .ctrl .lang-seg button + button { border-radius: 0 999px 999px 0; border-left: none; }
 
 /* S1 히어로 — 옅은 파스텔 워시 */
 .hero {
-  padding: 88px 0 72px;
-  background:
-    radial-gradient(900px 460px at 85% -10%, var(--hero-wash-a) 0%, rgba(236, 234, 253, 0) 62%),
-    radial-gradient(700px 380px at 5% 115%, var(--hero-wash-b) 0%, rgba(253, 238, 244, 0) 58%);
+  padding: 104px 0 84px;
+  background: var(--bg);
 }
 .hero h1 {
   font-size: clamp(1.85rem, 4.6vw, 2.6rem);
@@ -124,9 +122,9 @@ header.top nav a:hover { color: var(--point); }
   padding: 11px 22px; text-decoration: none; font-size: 0.93rem; font-weight: 600;
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.2s;
 }
-.hero .links a.primary { background: var(--point); color: #fff; box-shadow: var(--shadow-sm); }
+.hero .links a.primary { background: var(--point); color: var(--point-ink); box-shadow: var(--shadow-sm); }
 .hero .links a:not(.primary) { border: 1px solid var(--line); color: var(--ink); background: var(--glass-soft); }
-.hero .links a:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--point); }
+.hero .links a:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); border-color: var(--ink); }
 .hero .links a.primary:hover { border-color: transparent; }
 .hero .links a:active { transform: scale(0.97); }
 
@@ -140,7 +138,7 @@ header.top nav a:hover { color: var(--point); }
   background: var(--bg); box-shadow: var(--shadow-sm);
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.2s;
 }
-.map-grid a:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(109, 90, 230, 0.4); }
+.map-grid a:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); border-color: var(--hairline); }
 .map-grid b { display: block; font-size: 0.9rem; letter-spacing: -0.01em; }
 .map-grid small { color: var(--ink-soft); font-size: 0.8rem; }
 .map-grid .arrow { color: var(--point-deep); font-weight: 700; font-size: 0.8rem; }
@@ -163,7 +161,7 @@ header.top nav a:hover { color: var(--point); }
   display: block; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; text-align: left;
 }
 .artifacts a:hover img, .artifacts button.zoom:hover img {
-  transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: rgba(109, 90, 230, 0.45);
+  transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--hairline);
 }
 .artifacts figcaption { font-size: 0.8rem; color: var(--ink-soft); margin-top: 6px; max-width: 340px; }
 .artifacts figcaption .hint { color: var(--point-deep); font-weight: 600; }
@@ -220,7 +218,7 @@ dialog.lightbox img { width: auto; height: auto; max-width: 100%; max-height: 90
   color: var(--point-deep); background: var(--point-soft);
   padding: 3px 12px; border-radius: 999px; text-decoration: none;
 }
-.auto-row .demo-link:hover { background: var(--point); color: #fff; }
+.auto-row .demo-link:hover { background: var(--point); color: var(--point-ink); }
 .mobile-label { display: none; }
 
 /* S3 딥다이브 */
@@ -235,10 +233,10 @@ dialog.lightbox img { width: auto; height: auto; max-width: 100%; max-height: 90
   content: counter(step);
   position: absolute; left: -17px; top: 0;
   width: 32px; height: 32px; border-radius: 50%;
-  background: var(--point); color: #fff;
+  background: var(--point); color: var(--point-ink);
   font-weight: 700; font-size: 0.85rem;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 10px rgba(109, 90, 230, 0.3);
+  box-shadow: none;
 }
 .steps b { display: block; letter-spacing: -0.01em; }
 .steps small { color: var(--ink-soft); }
@@ -262,12 +260,12 @@ dialog.lightbox img { width: auto; height: auto; max-width: 100%; max-height: 90
 .deep-shot { border: 1px solid var(--line); border-radius: 12px; width: 100%; height: auto; display: block; box-shadow: var(--shadow-sm); }
 .deep .visit {
   display: inline-block; margin: 0 0 16px;
-  background: var(--point); color: #fff; text-decoration: none;
+  background: var(--point); color: var(--point-ink); text-decoration: none;
   padding: 11px 22px; border-radius: 999px; font-size: 0.93rem; font-weight: 600;
   box-shadow: var(--shadow-sm);
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
-.deep .visit:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.deep .visit:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); opacity: 0.88; }
 .deep .visit:active { transform: scale(0.97); }
 
 /* 직무 섹션 공통 */
@@ -279,12 +277,12 @@ dialog.lightbox img { width: auto; height: auto; max-width: 100%; max-height: 90
 .feature .pts li::before { content: ""; position: absolute; left: 2px; top: 16px; width: 7px; height: 7px; border-radius: 50%; background: var(--point); }
 .cta {
   display: inline-block; margin-top: 14px;
-  background: var(--point); color: #fff; text-decoration: none;
+  background: var(--point); color: var(--point-ink); text-decoration: none;
   padding: 11px 22px; border-radius: 999px; font-size: 0.93rem; font-weight: 600;
   box-shadow: var(--shadow-sm);
   transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
-.cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.cta:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); opacity: 0.88; }
 .cta:active { transform: scale(0.97); }
 
 /* S4 갤러리 */
@@ -295,7 +293,7 @@ dialog.lightbox img { width: auto; height: auto; max-width: 100%; max-height: 90
   box-shadow: var(--shadow-sm);
   transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease), border-color 0.2s;
 }
-.gallery .item:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(109, 90, 230, 0.4); }
+.gallery .item:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--hairline); }
 .gallery .item:active { transform: scale(0.98); }
 .gallery img { width: 100%; height: auto; aspect-ratio: 16/10; object-fit: cover; object-position: top; display: block; }
 .gallery .cap { padding: 14px 16px 16px; }
@@ -329,11 +327,18 @@ dialog.lightbox img { width: auto; height: auto; max-width: 100%; max-height: 90
 footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.88rem; color: var(--ink-soft); }
 
 /* 스크롤 페이드 */
-.fade { opacity: 0; transform: translateY(16px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.fade { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
 .fade.in { opacity: 1; transform: none; }
+/* 섹션 안 요소가 순서대로 올라온다 */
+.fade > .wrap > * { opacity: 0; transform: translateY(18px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.fade.in > .wrap > * { opacity: 1; transform: none; }
+.fade.in > .wrap > *:nth-child(2) { transition-delay: 0.06s; }
+.fade.in > .wrap > *:nth-child(3) { transition-delay: 0.12s; }
+.fade.in > .wrap > *:nth-child(4) { transition-delay: 0.18s; }
+.fade.in > .wrap > *:nth-child(n+5) { transition-delay: 0.24s; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .fade { opacity: 1; transform: none; transition: none; }
+  .fade, .fade > .wrap > * { opacity: 1; transform: none; transition: none; }
   .hero .links a, .deep .visit, .gallery .item { transition: none; }
 }
 @media (prefers-reduced-transparency: reduce) {
@@ -382,16 +387,17 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
 @media print {
   @page { margin: 7mm 11mm; }
   :root, :root[data-theme="dark"] {
-    --ink: #1d1d29; --ink-soft: #5a5a72; --line: #e7e7f0;
-    --bg: #ffffff; --bg-soft: #f7f7fc;
-    --point: #6d5ae6; --point-deep: #5747c9; --point-soft: #efedfc;
+    --ink: #1d1d1f; --ink-soft: #6e6e73; --line: #d2d2d7;
+    --bg: #ffffff; --bg-soft: #f5f5f7;
+    --point: #1d1d1f; --point-deep: #000000; --point-soft: #ebebed; --point-ink: #ffffff;
+    --hairline: rgba(0, 0, 0, 0.16);
     --glass: none; --glass-soft: none;
   }
   body { font-size: 10.5px; line-height: 1.35; }
   .map, .ctrl { display: none; }
   .artifacts { display: none !important; }
   header.top nav, .gallery img, .deep-shot, .fade { display: none; }
-  .fade { opacity: 1 !important; transform: none !important; display: revert; }
+  .fade, .fade > .wrap > * { opacity: 1 !important; transform: none !important; transition: none !important; display: revert; }
   header.top { position: static; background: none; backdrop-filter: none; }
   .hero .links { display: block; }
   .hero .links a, .hero .links a.primary, .deep .visit {
@@ -538,7 +544,7 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
   <div class="wrap">
     <h2 data-en="① In-house AI Training &amp; Prompt Coaching">① 사내 AI 교육 및 프롬프트 코칭 경험</h2>
     <p class="sec-cap" data-en="Experience teaching staff how to use AI at work.">AI 활용법 사내 교육 경력</p>
-    <p class="duty-lead" data-en="I have handled in-house training at both EDM Study Abroad Center and Chongro Overseas Educational Institute. At Chongro I built and ran an AI training for the consulting managers myself: task-by-task use cases, live demos, and a closing section on security rules such as pseudonymizing personal data and never uploading internal documents. At EDM I ran pre-departure orientations, explaining the same procedures over and over to students hearing them for the first time. Whether the audience is a manager or a student, I am used to checking what they already know and adjusting how I explain from there.">EDM유학센터와 종로유학원 두 곳에서 사내 교육을 맡아 왔습니다. 종로유학원에서는 매니저들을 상대로 AI 활용 교육을 직접 만들어 진행했습니다. 상담 업무별 활용법과 시연으로 구성했고, 마지막 장은 개인정보 가명 처리, 내부 자료 업로드 금지 같은 보안 수칙이었습니다. EDM유학센터에서는 학생들의 출국 준비 안내를 담당하며, 처음 듣는 사람에게 같은 절차를 반복해 설명했습니다. 듣는 사람이 매니저든 학생이든 아는 만큼이 다 다르다는 전제로 말을 고르는 일에 익숙합니다.</p>
+    <p class="duty-lead" data-en="I have handled in-house training at both edm Study Abroad Center and Chongro Overseas Educational Institute. At Chongro I built and ran an AI training for the consulting managers myself: task-by-task use cases, live demos, and a closing section on security rules such as pseudonymizing personal data and never uploading internal documents. At edm I ran pre-departure orientations, explaining the same procedures over and over to students hearing them for the first time. Whether the audience is a manager or a student, I am used to checking what they already know and adjusting how I explain from there.">edm유학센터와 종로유학원 두 곳에서 사내 교육을 맡아 왔습니다. 종로유학원에서는 매니저들을 상대로 AI 활용 교육을 직접 만들어 진행했습니다. 상담 업무별 활용법과 시연으로 구성했고, 마지막 장은 개인정보 가명 처리, 내부 자료 업로드 금지 같은 보안 수칙이었습니다. edm유학센터에서는 학생들의 출국 준비 안내를 담당하며, 처음 듣는 사람에게 같은 절차를 반복해 설명했습니다. 듣는 사람이 매니저든 학생이든 아는 만큼이 다 다르다는 전제로 말을 고르는 일에 익숙합니다.</p>
     <div class="artifacts">
       <div class="art-row">
         <figure>
@@ -549,13 +555,13 @@ footer { border-top: 1px solid var(--line); padding: 30px 0 52px; font-size: 0.8
         </figure>
         <figure>
           <button class="zoom" type="button" aria-label="사진 크게 보기">
-            <img src="assets/art-ot.webp" alt="EDM유학센터 학생 출국 오리엔테이션 진행 모습" loading="lazy">
+            <img src="assets/art-ot.webp" alt="edm유학센터 학생 출국 오리엔테이션 진행 모습" loading="lazy">
           </button>
-          <figcaption data-en="Pre-departure orientation for EDM students; I also handled in-house training <span class='hint'>· enlarge</span>">EDM유학센터 학생들의 출국 OT 및 사내 교육 담당 경험 <span class="hint">· 크게 보기</span></figcaption>
+          <figcaption data-en="Pre-departure orientation for edm students; I also handled in-house training <span class='hint'>· enlarge</span>">edm유학센터 학생들의 출국 OT 및 사내 교육 담당 경험 <span class="hint">· 크게 보기</span></figcaption>
         </figure>
       </div>
       <dialog class="lightbox" id="lightbox">
-        <img src="assets/art-ot.webp" alt="EDM유학센터 학생 출국 오리엔테이션 진행 모습 (크게 보기)">
+        <img src="assets/art-ot.webp" alt="edm유학센터 학생 출국 오리엔테이션 진행 모습 (크게 보기)">
       </dialog>
     </div>
     <p class="duty-lead" style="margin-top:22px;" data-en="I rewrote that training's skeleton (task-by-task use cases plus security rules) for the roles in this posting: a per-role prompt guide for production management, quality and office support. Nine bad-vs-good example cards, plus the rules for substituting real values with [Company A], [00%], on one page. I made it intending to use it as my first internal release.">그 교육의 뼈대인 업무별 활용법과 보안 수칙을 이 공고의 직군에 맞춰 새로 쓴 것이 직군별 프롬프트 가이드입니다. 생산관리, 품질, 사무지원 세 직군의 나쁜 예와 좋은 예 카드 9장에, 실제 값을 [A사], [00%]로 치환해 쓰는 보안 수칙까지 한 페이지에 담았습니다. 입사하면 첫 배포물로 바로 쓸 생각으로 만들었습니다.</p>
